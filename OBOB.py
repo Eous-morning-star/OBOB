@@ -456,7 +456,7 @@ elif st.session_state.page == "monitoring":
         date = st.date_input("Date", key="date")
         area = st.selectbox("Select Area", options=list(equipment_lists.keys()), key="area")
         equipment_options = equipment_lists.get(area, [])
-        equipment = st.selectbox("Select Equipment", options=equipment_options, key="equipment", on_change=clear_fields)
+        equipment = st.selectbox("Select Equipment", options=equipment_options, key="equipment")
 
         # Checkbox for "Is the equipment running?"
         is_running = st.checkbox("Is the equipment running?", key="is_running")
@@ -544,9 +544,6 @@ elif st.session_state.page == "monitoring":
                 
                     st.success("✅ Data saved to Google Sheets!")
 
-                    # **Clear all fields after successful submission**
-                    clear_fields()
-                    
                 else:
                     st.error("❌ Unable to save data: Google Sheet connection is missing.")
             except Exception as e:
