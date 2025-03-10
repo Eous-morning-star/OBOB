@@ -421,7 +421,7 @@ if st.session_state.page == "main":
         st.session_state.page = "monitoring"
 
 elif st.session_state.page == "monitoring":
-        def clear_fields():
+            def clear_fields():
         """Clears all input fields after submission."""
             st.session_state.de_temp = 0.0
             st.session_state.dr_temp = 0.0
