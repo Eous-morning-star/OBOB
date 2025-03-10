@@ -3,6 +3,9 @@ import pandas as pd
 import os
 from datetime import datetime, timedelta
 import plotly.express as px
+import base64
+import gspread
+from google.oauth2.service_account import Credentials
 
 # Define deviation thresholds for specific equipment
 equipment_thresholds = ({
@@ -33,22 +36,84 @@ equipment_thresholds = ({
     "1680-PH-01B": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 60}, "RMS Velocity (mm/s)": {"min": 4.0, "max": 4.2}},
 })
 
-# Define the file path at the top of the script
-file_path = "data/condition_data.csv"
 
+# ✅ Authenticate Google Sheets with the correct scope
+def authenticate_google_sheets():
+    try:
+        scopes = ["https://www.googleapis.com/auth/spreadsheets", 
+                  "https://www.googleapis.com/auth/drive"]  # Added Drive access for permission issues
+        
+        creds = Credentials.from_service_account_info(st.secrets["GOOGLE_SHEET_KEY"], scopes=scopes)
+        return gspread.authorize(creds)
+    except Exception as e:
+        st.error(f"❌ Google Sheets authentication failed: {e}")
+        return None
 
-# Create the directory if it doesn't exist
-if not os.path.exists("data"):
-    os.makedirs("data")
+# ✅ Connect to Google Sheets
+client = authenticate_google_sheets()
+if client:
+    try:
+        sheet = client.open("INDORAMA LLF").worksheet("Sheet2")
+        st.success("✅ Connected to Google Sheets successfully!")
+    except Exception as e:
+        st.error(f"❌ Unable to open Google Sheet: {e}")
+else:
+    st.stop()
+
+# Apply CSS for black buttons
+st.markdown(
+    """
+    <style>
+    /* Make all text bold */
+    h1, h2, h3, h4, h5, h6, p, label {
+        font-weight: bold !important;
+        font-size: 18px !important;
+    }
+
+    /* Add black shadow to headings */
+    h1, h2, h3, h4, h5, h6 {
+        text-shadow: 3px 3px 5px black !important;
+    }
+
+    /* Ensure text is visible over the background */
+    body, .stApp {
+        color: white !important; /* Change to black if needed */
+    }
+    
+    /* Style Streamlit buttons */
+    div.stButton > button {
+        background-color: black !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 10px 20px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        border: 2px solid white !important;
+    }
+
+    /* Change button color when hovered */
+    div.stButton > button:hover {
+        background-color: #333 !important;  /* Darker black on hover */
+        color: white !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# ✅ Load existing data from Google Sheets
+def load_data():
+    """Fetch data from Google Sheets."""
+    try:
+        data = sheet.get_all_records()
+        return pd.DataFrame(data)
+    except Exception as e:
+        st.error(f"Error loading data from Google Sheets: {e}")
+        return pd.DataFrame()
+    
 # Initialize session state variables
 if "page" not in st.session_state:
     st.session_state.page = "main"  # Set default page to "main"
-
-def load_data(file_path):
-    """Load data from a CSV file."""
-    if not os.path.exists(file_path):
-        return pd.DataFrame()  # Return an empty DataFrame if file doesn't exist
-    return pd.read_csv(file_path)
 
 def validate_columns(df, required_columns):
     missing = [col for col in required_columns if col not in df.columns]
@@ -58,40 +123,50 @@ def validate_columns(df, required_columns):
     return True
 
 # Add Utility Functions Here
-def calculate_kpis(file_path):
+def calculate_kpis():
     """Calculate KPIs and return data for charts."""
-    if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
-        st.warning(f"No data file found at {file_path}. Showing default KPI values.")
-        return {
-            "compliance_rate": "No Data",
-            "avg_temp": "No Data",
-            "running_percentage": "No Data",
-            "data": pd.DataFrame()  # Return an empty DataFrame for charts
-        }
-
-    # Load the CSV file
-    data = pd.read_csv(file_path)
+    data = load_data()
     if data.empty:
-        st.warning("The data file is empty. Showing default KPI values.")
         return {
             "compliance_rate": "No Data",
             "avg_temp": "No Data",
             "running_percentage": "No Data",
-            "data": pd.DataFrame()  # Return an empty DataFrame for charts
+            "data": pd.DataFrame()
         }
 
-    # Calculate KPIs
+    # ✅ Convert "Is Running" column to numeric (1 for True, 0 for False)
+    data["Is Running"] = pd.to_numeric(data["Is Running"], errors="coerce")
+
     compliance_rate = data["Is Running"].mean() * 100
     avg_temp = data[["Driving End Temp", "Driven End Temp"]].mean().mean()
     running_percentage = (data["Is Running"].sum() / len(data)) * 100
 
-    # Return KPIs and data
     return {
         "compliance_rate": f"{compliance_rate:.2f}%",
         "avg_temp": f"{avg_temp:.2f}°C",
         "running_percentage": f"{running_percentage:.2f}%",
         "data": data
     }
+
+# Function to set background image from an online URL
+def set_background(image_url):
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Use the corrected GitHub raw image URL
+set_background("https://raw.githubusercontent.com/Eous-morning-star/INDORAMA-MAIN/main/picture.jpg")
 
 # Display the logo at the top of the homepage
 st.image("indorama_logo.png", use_container_width=True)
@@ -132,144 +207,126 @@ if st.session_state.page == "main":
 
     # Display KPIs
     st.subheader("Key Performance Indicators (KPIs)")
-    kpis = calculate_kpis(file_path)
+    kpis = calculate_kpis()
     col1, col2, col3 = st.columns(3)
     col1.metric("Compliance Rate", kpis["compliance_rate"])
     col2.metric("Average Temperature", kpis["avg_temp"])
     col3.metric("Running Equipment", kpis["running_percentage"])
 
-
-    # High Priority Dashboard Section
-    st.write("---")  # Separator line
-    st.subheader("📊 High Priority Equipment Dashboard")
-
-    # Load the data
-    data = load_data(file_path)
-
-    if data.empty:
-        st.warning("No data available. Please enter condition monitoring data first.")
-    else:
-        # Filter high-priority equipment
-        high_priority_data = data[data["High Priority"] == True]
-
-        if high_priority_data.empty:
-            st.info("No equipment is marked as high priority.")
-        else:
-            # Add date filters for high-priority equipment
-            st.write("#### Filter by Date Range")
-            start_date = st.date_input("Start Date", value=datetime(2023, 1, 1), key="high_priority_start_date")
-            end_date = st.date_input("End Date", value=datetime.now(), key="high_priority_end_date")
-
-            # Filter data by date range
-            high_priority_data["Date"] = pd.to_datetime(high_priority_data["Date"], errors="coerce")
-            filtered_data = high_priority_data[
-                (high_priority_data["Date"] >= pd.Timestamp(start_date)) &
-                (high_priority_data["Date"] <= pd.Timestamp(end_date))
-                ]
-
-            # Display filtered high-priority equipment
-            st.subheader("High Priority Equipment")
-            st.dataframe(filtered_data)
-
-            # Downloadable CSV for High Priority Equipment
-            st.write("#### Download High Priority Report")
-            csv = filtered_data.to_csv(index=False)
-            st.download_button("Download as CSV", data=csv, file_name="high_priority_report.csv", mime="text/csv")
-
     st.write("---")
 
-    # Weekly Report Dashboard
+    # ✅ Weekly Report Dashboard
     st.title("Weekly Report Dashboard")
-
-    # Filter by date range
-    start_date = st.date_input("Start Date", value=datetime.now() - timedelta(days=7),
-                               key="weekly_report_start_date")
+    
+    # ✅ Filter by date range
+    start_date = st.date_input("Start Date", value=datetime.now() - timedelta(days=7), key="weekly_report_start_date")
     end_date = st.date_input("End Date", value=datetime.now(), key="weekly_report_end_date")
-
-    # Load the data
-    data = load_data(file_path)
-
+    
+    # ✅ Load the data
+    data = load_data()
+    
     if data.empty:
         st.warning("No data available. Please enter condition monitoring data first.")
     else:
-        # Validate required columns
-        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)",
-                            "Oil Level", "Is Running"]
+        # ✅ Ensure Required Columns Exist
+        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Oil Level", "Is Running"]
         if not validate_columns(data, required_columns):
             st.error("Dataset does not contain all required columns for analysis.")
         else:
-            # Filter data for date range and running equipment
+            # ✅ Convert columns to correct types
             data["Date"] = pd.to_datetime(data["Date"], errors="coerce")
+            data["Is Running"] = data["Is Running"].astype(str).str.lower() == "true"  # Convert to boolean
+            
+            # ✅ Ensure numeric values
+            for col in ["Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)"]:
+                data[col] = pd.to_numeric(data[col], errors="coerce")
+    
+            # ✅ Filter data based on date range and running equipment
             filtered_data = data[
                 (data["Date"] >= pd.Timestamp(start_date)) &
                 (data["Date"] <= pd.Timestamp(end_date)) &
                 (data["Is Running"] == True)  # Only include running equipment
-                ]
-
+            ]
+    
             if filtered_data.empty:
-                st.success(
-                    "✅ All equipment is operating within thresholds, or no running equipment was found for the selected date range.")
+                st.success("✅ All equipment is operating within thresholds, or no running equipment was found for the selected date range.")
             else:
-                # Check for deviations
+                # ✅ Check for deviations
                 deviations = []
+    
                 for _, row in filtered_data.iterrows():
-                    equipment = row["Equipment"]
+                    equipment = row["Equipment"].strip()  # Remove any extra spaces
+    
                     if equipment in equipment_thresholds:
-                        thresholds = equipment_thresholds[equipment]
+                        thresholds = equipment_thresholds[equipment]  # ✅ Moved inside the loop
+    
                         if (
-                                not thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <=
-                                    thresholds["Driving End Temp"]["max"] or
-                                not thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <=
-                                    thresholds["Driven End Temp"]["max"] or
-                                not thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <=
-                                    thresholds["RMS Velocity (mm/s)"]["max"]
+                            not (thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= thresholds["Driving End Temp"]["max"]) or
+                            not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]) or
+                            not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"])
                         ):
                             deviations.append(row)
-
+    
                 deviation_data = pd.DataFrame(deviations)
-
+    
                 if deviation_data.empty:
-                    st.success(
-                        "✅ All running equipment is operating within thresholds for the selected date range.")
+                    st.success("✅ All running equipment is within the specified thresholds.")
                 else:
                     st.subheader("⚠️ Running Equipment with Deviations")
                     st.dataframe(deviation_data)
-
-                    # Recommendations
+    
+                    # ✅ Generate Recommendations
                     st.write("### 🔍 Recommendations")
                     recommendations = []
+    
                     for _, row in deviation_data.iterrows():
                         equipment = row["Equipment"]
-
-                        if not thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= \
-                               thresholds["Driving End Temp"]["max"]:
-                            recommendations.append(
-                                f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
-
-                        if not thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= \
-                               thresholds["Driven End Temp"]["max"]:
-                            recommendations.append(
-                                f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
-
-                        if not thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= \
-                               thresholds["RMS Velocity (mm/s)"]["max"]:
-                            recommendations.append(
-                                f"📊 **{equipment}**: RMS Velocity is outside the range {thresholds['RMS Velocity (mm/s)']['min']} - {thresholds['RMS Velocity (mm/s)']['max']} mm/s.")
-
-                        if row["Oil Level"] == "Low":
-                            recommendations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
-
+                        thresholds = equipment_thresholds.get(equipment, {})
+    
+                        if thresholds:
+                            if not (thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= thresholds["Driving End Temp"]["max"]):
+                                recommendations.append(f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
+    
+                            if not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]):
+                                recommendations.append(f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
+    
+                            if not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"]):
+                                recommendations.append(f"📊 **{equipment}**: RMS Velocity is outside the range {thresholds['RMS Velocity (mm/s)']['min']} - {thresholds['RMS Velocity (mm/s)']['max']} mm/s.")
+    
+                            if row["Oil Level"] == "Low":
+                                recommendations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
+    
                     if recommendations:
                         for rec in recommendations:
                             st.info(rec)
                     else:
                         st.success("✅ No immediate issues detected in the deviations data.")
-
-                    # Downloadable Weekly Report
+                    # ✅ Add CSS to make the "Download Report" button black
+                    st.markdown(
+                        """
+                        <style>
+                        div.stDownloadButton > button {
+                            background-color: black !important;
+                            color: white !important;
+                            border-radius: 10px !important;
+                            padding: 10px 15px !important;
+                            font-size: 16px !important;
+                            font-weight: bold !important;
+                            border: 2px solid white !important;
+                        }
+                    
+                        div.stDownloadButton > button:hover {
+                            background-color: #333 !important;
+                            color: white !important;
+                        }
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    # ✅ Download Weekly Report
                     st.write("#### Download Weekly Report")
                     csv = deviation_data.to_csv(index=False)
-                    st.download_button("Download Report as CSV", data=csv, file_name="weekly_report.csv",
-                                       mime="text/csv")
+                    st.download_button("Download Report as CSV", data=csv, file_name="weekly_report.csv", mime="text/csv")
 
         # Ensure data is available from KPI calculation
     data = kpis["data"]
@@ -363,47 +420,7 @@ if st.session_state.page == "main":
     if st.button("Next"):
         st.session_state.page = "monitoring"
 
-elif st.session_state.page == "high_priority_dashboard":
-    st.title("High Priority Equipment Dashboard")
-
-    # Load data
-    data = load_data(file_path)
-
-    if data.empty:
-        st.warning("No data available. Please enter condition monitoring data first.")
-    else:
-        # Filter high-priority equipment
-        high_priority_data = data[data["High Priority"] == True]
-
-        if high_priority_data.empty:
-            st.info("No equipment is marked as high priority.")
-        else:
-            # Add date filters
-            start_date = st.date_input("Start Date", value=datetime(2023, 1, 1), key="high_priority_start_date")
-            end_date = st.date_input("End Date", value=datetime.now(), key="high_priority_end_date")
-
-            # Filter data by date range
-            high_priority_data["Date"] = pd.to_datetime(high_priority_data["Date"])
-            filtered_data = high_priority_data[
-                (high_priority_data["Date"] >= start_date) &
-                (high_priority_data["Date"] <= end_date)
-            ]
-
-            st.subheader("High Priority Equipment")
-            st.dataframe(filtered_data)
-
-            # Downloadable CSV for High Priority Equipment
-            st.write("#### Download High Priority Report")
-            csv = filtered_data.to_csv(index=False)
-            st.download_button("Download as CSV", data=csv, file_name="high_priority_report.csv", mime="text/csv")
-
 elif st.session_state.page == "monitoring":
-
-    def load_data(file_path):
-        """Load data from a CSV file."""
-        if not os.path.exists(file_path):
-            return pd.DataFrame()  # Return an empty DataFrame if file doesn't exist
-        return pd.read_csv(file_path)
 
     def filter_data(df, equipment, start_date, end_date):
         """Filter data by equipment and date range."""
@@ -441,10 +458,12 @@ elif st.session_state.page == "monitoring":
         equipment_options = equipment_lists.get(area, [])
         equipment = st.selectbox("Select Equipment", options=equipment_options, key="equipment")
 
-
-        # Tick box for "Is the equipment running?"
+        # Checkbox for "Is the equipment running?"
         is_running = st.checkbox("Is the equipment running?", key="is_running")
-
+        
+        # ✅ Initialize 'gearbox' before using it
+        gearbox = False  # Default value
+        
         # Data Entry Fields
         if is_running:
             de_temp = st.number_input("Driving End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
@@ -466,11 +485,10 @@ elif st.session_state.page == "monitoring":
             vibration_displacement = st.number_input("Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
                                                      key="vibration_displacement")
 
-            # Add a checkbox for marking equipment as high priority
-            high_priority = st.checkbox("Mark as High Priority", key="high_priority")
-
             # Gearbox Inputs
-            gearbox = st.checkbox("Does the equipment have a gearbox?", key="gearbox")
+            gearbox = st.checkbox(
+    "Does the equipment have a gearbox?", key=f"gearbox_{equipment}_{date}"
+)
             if gearbox:
                 gearbox_temp = st.number_input("Gearbox Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
                                                key="gearbox_temp")
@@ -491,80 +509,45 @@ elif st.session_state.page == "monitoring":
         # Submit Button
         if st.button("Submit Data"):
             try:
-                # Check if essential fields are filled (add your required fields here)
-                if not date or not area or not equipment:
-                    st.error("Please fill in all required fields before submitting.")
-                elif is_running and ("de_temp" not in st.session_state or "dr_temp" not in st.session_state):
-                    st.error("Please provide temperature values if the equipment is running.")
+                new_data = pd.DataFrame([{
+                    "Date": date.strftime("%Y-%m-%d"),
+                    "Area": area,
+                    "Equipment": equipment,
+                    "Is Running": is_running,
+                    "Driving End Temp": de_temp if is_running else 0.0,
+                    "Driven End Temp": dr_temp if is_running else 0.0,
+                    "Oil Level": oil_level if is_running else "N/A",
+                    "Abnormal Sound": abnormal_sound if is_running else "N/A",
+                    "Leakage": leakage if is_running else "N/A",
+                    "Observation": observation if is_running else "Not Running",
+                    "RMS Velocity (mm/s)": vibration_rms_velocity if is_running else 0.0,
+                    "Peak Acceleration (g)": vibration_peak_acceleration if is_running else 0.0,
+                    "Displacement (µm)": vibration_displacement if is_running else 0.0,
+                    "Gearbox Temp": gearbox_temp if 'gearbox' in locals() and gearbox else 0.0,
+                    "Gearbox Oil Level": gearbox_oil if 'gearbox' in locals() and gearbox else "N/A",
+                    "Gearbox Leakage": gearbox_leakage if 'gearbox' in locals() and gearbox else "N/A",
+                    "Gearbox Abnormal Sound": gearbox_abnormal_sound if 'gearbox' in locals() and gearbox else "N/A",
+                    "Gearbox RMS Velocity (mm/s)": gearbox_vibration_rms_velocity if 'gearbox' in locals() and gearbox else 0.0,
+                    "Gearbox Peak Acceleration (g)": gearbox_vibration_peak_acceleration if 'gearbox' in locals() and gearbox else 0.0,
+                    "Gearbox Displacement (µm)": gearbox_vibration_displacement if 'gearbox' in locals() and gearbox else 0.0
+                }])
+        
+                # ✅ Ensure Google Sheets connection exists
+                if sheet:
+                    existing_data = sheet.get_all_records()
+                    df = pd.DataFrame(existing_data)
+                    df = pd.concat([df, new_data], ignore_index=True)
+                
+                    # ✅ Save updated data to Google Sheets
+                    sheet.clear()
+                    sheet.update([df.columns.values.tolist()] + df.values.tolist())
+                
+                    st.success("✅ Data saved to Google Sheets!")
                 else:
-                    # Prepare data
-                    if not is_running:
-                        # If equipment is not running, set all numeric fields to 0 and strings to 'N/A'
-                        data = {
-                            "Date": [date],
-                            "Area": [area],
-                            "Equipment": [equipment],
-                            "Is Running": [False],
-                            "High Priority": [False],
-                            "Driving End Temp": [0.0],
-                            "Driven End Temp": [0.0],
-                            "Oil Level": ["N/A"],
-                            "Abnormal Sound": ["N/A"],
-                            "Leakage": ["N/A"],
-                            "Observation": ["Not Running"],
-                            "RMS Velocity (mm/s)": [0.0],
-                            "Peak Acceleration (g)": [0.0],
-                            "Displacement (µm)": [0.0],
-                            "Gearbox Temp": [0.0],
-                            "Gearbox Oil Level": ["N/A"],
-                            "Gearbox Leakage": ["N/A"],
-                            "Gearbox Abnormal Sound": ["N/A"],
-                            "Gearbox RMS Velocity (mm/s)": [0.0],
-                            "Gearbox Peak Acceleration (g)": [0.0],
-                            "Gearbox Displacement (µm)": [0.0],
-                        }
-
-                    else:
-                        # If equipment is running, save entered values
-                        data = {
-                            "Date": [date],
-                            "Area": [area],
-                            "Equipment": [equipment],
-                            "Is Running": [True],
-                            "High Priority": [high_priority],
-                            "Driving End Temp": [st.session_state.de_temp],
-                            "Driven End Temp": [st.session_state.dr_temp],
-                            "Oil Level": [st.session_state.oil_level],
-                            "Abnormal Sound": [st.session_state.abnormal_sound],
-                            "Leakage": [st.session_state.leakage],
-                            "Observation": [st.session_state.observation],
-                            "RMS Velocity (mm/s)": [st.session_state.vibration_rms_velocity],
-                            "Peak Acceleration (g)": [st.session_state.vibration_peak_acceleration],
-                            "Displacement (µm)": [st.session_state.vibration_displacement],
-                            "Gearbox Temp": [
-                                st.session_state.gearbox_temp if "gearbox_temp" in st.session_state else 0.0],
-                            "Gearbox Oil Level": [
-                                st.session_state.gearbox_oil if "gearbox_oil" in st.session_state else "N/A"],
-                            "Gearbox Leakage": [
-                                st.session_state.gearbox_leakage if "gearbox_leakage" in st.session_state else "N/A"],
-                            "Gearbox Abnormal Sound": [
-                                st.session_state.gearbox_leakage if "gearbox_abnormal_sound" in st.session_state else "N/A"]
-                        }
-
-                    # Save to CSV
-                    df = pd.DataFrame(data)
-                    file_path = "data/condition_data.csv"
-                    if not os.path.exists("data"):
-                        os.makedirs("data")
-                    if os.path.exists(file_path):
-                        df.to_csv(file_path, mode="a", header=False, index=False)
-                    else:
-                        df.to_csv(file_path, index=False)
-
-                    st.success("Data Submitted Successfully!")
-
+                    st.error("❌ Unable to save data: Google Sheet connection is missing.")
             except Exception as e:
-                st.error(f"An error occurred: {e}")
+                st.error(f"Error saving data: {e}")
+
 
     # Tab 2: Reports and Visualizations
     with tab2:
@@ -572,7 +555,7 @@ elif st.session_state.page == "monitoring":
         file_path = "data/condition_data.csv"
 
         # Load data
-        data = load_data(file_path)
+        data = load_data()
 
         if data.empty:
             st.warning("No data available. Please enter condition monitoring data first.")
@@ -600,11 +583,12 @@ elif st.session_state.page == "monitoring":
                     # Filter data for the selected equipment and date range
                     data["Date"] = pd.to_datetime(data["Date"], errors="coerce")
                     data = data.dropna(subset=["Date"])  # Remove invalid dates
+                    data["Is Running"] = pd.to_numeric(data["Is Running"], errors="coerce")
                     filtered_data = data[
-                        (data["Equipment"] == selected_equipment) &
-                        (data["Date"] >= pd.to_datetime(start_date)) &
-                        (data["Date"] <= pd.to_datetime(end_date))
-                        ]
+                        (data["Date"] >= pd.Timestamp(start_date)) &
+                        (data["Date"] <= pd.Timestamp(end_date)) &
+                        (data["Is Running"] == 1)  # Use 1 instead of True
+                    ]
 
                     # Check if filtered data is empty
                     if filtered_data.empty:
