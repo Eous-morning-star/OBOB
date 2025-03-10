@@ -421,26 +421,25 @@ if st.session_state.page == "main":
         st.session_state.page = "monitoring"
 
 elif st.session_state.page == "monitoring":
-    
         def clear_fields():
         """Clears all input fields after submission."""
-        st.session_state.de_temp = 0.0
-        st.session_state.dr_temp = 0.0
-        st.session_state.oil_level = "Normal"
-        st.session_state.abnormal_sound = "No"
-        st.session_state.leakage = "No"
-        st.session_state.observation = ""
-        st.session_state.vibration_rms_velocity = 0.0
-        st.session_state.vibration_peak_acceleration = 0.0
-        st.session_state.vibration_displacement = 0.0
-        st.session_state.gearbox = False
-        st.session_state.gearbox_temp = 0.0
-        st.session_state.gearbox_oil = "Normal"
-        st.session_state.gearbox_leakage = "No"
-        st.session_state.gearbox_abnormal_sound = "No"
-        st.session_state.gearbox_vibration_rms_velocity = 0.0
-        st.session_state.gearbox_vibration_peak_acceleration = 0.0
-        st.session_state.gearbox_vibration_displacement = 0.0
+            st.session_state.de_temp = 0.0
+            st.session_state.dr_temp = 0.0
+            st.session_state.oil_level = "Normal"
+            st.session_state.abnormal_sound = "No"
+            st.session_state.leakage = "No"
+            st.session_state.observation = ""
+            st.session_state.vibration_rms_velocity = 0.0
+            st.session_state.vibration_peak_acceleration = 0.0
+            st.session_state.vibration_displacement = 0.0
+            st.session_state.gearbox = False
+            st.session_state.gearbox_temp = 0.0
+            st.session_state.gearbox_oil = "Normal"
+            st.session_state.gearbox_leakage = "No"
+            st.session_state.gearbox_abnormal_sound = "No"
+            st.session_state.gearbox_vibration_rms_velocity = 0.0
+            st.session_state.gearbox_vibration_peak_acceleration = 0.0
+            st.session_state.gearbox_vibration_displacement = 0.0
 
 
     def filter_data(df, equipment, start_date, end_date):
