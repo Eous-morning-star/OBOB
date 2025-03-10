@@ -201,7 +201,7 @@ if st.session_state.page == "main":
                 """)
 
     st.write("""
-                This application is designed to improve condition monitoring and maintenance tracking for Indorama Petrochemicals Ltd.
+                This application is designed to improve condition monitoring and maintenance tracking for Indorama Petrochemicals Ltd/OBOB GAS PLANT.
                 For assistance or feedback, please reach out via the support link above.
                 """)
 
