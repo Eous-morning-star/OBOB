@@ -196,7 +196,8 @@ if st.session_state.page == "main":
 
     st.write("""
                 - **Application Version**: 1.0.0  
-                - **Developer**: [Nwaoba Kenneth / PE Mechanical]  
+                - **Developer**: [Nwaoba Kenneth / PE Mechanical]
+                - **Approved by**: [Nitin Narkhede / Mechanical]
                 - **Contact Support**: [nwaoba00@gmail.com](mailto:support@yourcompany.com)
                 """)
 
