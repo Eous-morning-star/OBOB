@@ -246,7 +246,7 @@ if st.session_state.page == "main":
         st.warning("No data available. Please enter condition monitoring data first.")
     else:
         # ✅ Ensure Required Columns Exist
-        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)" "Oil Level", "Is Running"]
+        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)", "Is Running"]
         if not validate_columns(data, required_columns):
             st.error("Dataset does not contain all required columns for analysis.")
         else:
