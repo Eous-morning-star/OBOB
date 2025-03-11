@@ -262,6 +262,7 @@ if st.session_state.page == "main":
             filtered_data = data[
                 (data["Date"] >= pd.Timestamp(start_date)) &
                 (data["Date"] <= pd.Timestamp(end_date)) &
+                (data["Equipment"] == selected_equipment) &
                 (data["Is Running"] == True)  # Only include running equipment
             ]
     
