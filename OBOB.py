@@ -485,21 +485,21 @@ elif st.session_state.page == "monitoring":
 
             # Motor Inputs
             st.subheader("Motor Monitoring")
-                motor_de_temp = st.number_input("Motor Driving End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
-                                      key="motor_de_temp")
-                motor_dr_temp = st.number_input("Motor Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
-                                      key="motor_dr_temp")
-                motor_abnormal_sound = st.selectbox("Motor Abnormal Sound", ["No", "Yes"], key="motor_abnormal_sound")
-                # Vibration Monitoring for motor
-                st.subheader("Motor_Vibration Monitoring")
-                motor_vibration_rms_velocity = st.number_input("Motor RMS Velocity (mm/s)", min_value=0.0, max_value=100.0,
-                                                         step=0.1,
-                                                         key="motor_vibration_rms_velocity")
-                motor_vibration_peak_acceleration = st.number_input("Motor Peak Acceleration (g)", min_value=0.0, max_value=10.0,
-                                                              step=0.1,
-                                                              key="motor_vibration_peak_acceleration")
-                motor_vibration_displacement = st.number_input("Motor Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
-                                                         key="motor_vibration_displacement")
+            motor_de_temp = st.number_input("Motor Driving End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
+                                  key="motor_de_temp")
+            motor_dr_temp = st.number_input("Motor Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
+                                  key="motor_dr_temp")
+            motor_abnormal_sound = st.selectbox("Motor Abnormal Sound", ["No", "Yes"], key="motor_abnormal_sound")
+            # Vibration Monitoring for motor
+            st.subheader("Motor_Vibration Monitoring")
+            motor_vibration_rms_velocity = st.number_input("Motor RMS Velocity (mm/s)", min_value=0.0, max_value=100.0,
+                                                     step=0.1,
+                                                     key="motor_vibration_rms_velocity")
+            motor_vibration_peak_acceleration = st.number_input("Motor Peak Acceleration (g)", min_value=0.0, max_value=10.0,
+                                                          step=0.1,
+                                                          key="motor_vibration_peak_acceleration")
+            motor_vibration_displacement = st.number_input("Motor Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                     key="motor_vibration_displacement")
 
         # Submit Button
         if st.button("Submit Data"):
