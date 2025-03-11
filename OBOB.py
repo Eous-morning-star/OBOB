@@ -198,12 +198,12 @@ if st.session_state.page == "main":
                 - **Application Version**: 1.0.0  
                 - **Developer**: [Nwaoba Kenneth / PE Mechanical]
                 - **Approved by**: [Nitin Narkhede / Mechanical]
-                - **Contact Support**: [nwaoba00@gmail.com](mailto:support@yourcompany.com)
+                - **Contact Support**: [kenneth.nwaoba@indorama.com](mailto:support@yourcompany.com)
                 """)
 
     st.write("""
                 This application is designed to improve condition monitoring and maintenance tracking for Indorama Petrochemicals Ltd/OBOB GAS PLANT.
-                For assistance or feedback, please reach out via the support link above.
+                For assistance or feedback, please reach out via the support link above. This application is approved by Mr. Nitin Narkhede (nitin.narkhede@indorama.com)
                 """)
 
     # Display KPIs
