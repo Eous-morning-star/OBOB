@@ -462,9 +462,6 @@ elif st.session_state.page == "monitoring":
         # Checkbox for "Is the equipment running?"
         is_running = st.checkbox("Is the equipment running?", key="is_running")
         
-        # ✅ Initialize 'gearbox' before using it
-        gearbox = False  # Default value
-        
         # Data Entry Fields
         if is_running:
             de_temp = st.number_input("Driving End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
@@ -486,26 +483,23 @@ elif st.session_state.page == "monitoring":
             vibration_displacement = st.number_input("Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
                                                      key="vibration_displacement")
 
-            # Gearbox Inputs
-            gearbox = st.checkbox(
-    "Does the equipment have a gearbox?", key=f"gearbox_{equipment}_{date}"
-)
-            if gearbox:
-                gearbox_temp = st.number_input("Gearbox Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
-                                               key="gearbox_temp")
-                gearbox_oil = st.selectbox("Gearbox Oil Level", ["Normal", "Low", "High"], key="gearbox_oil")
-                gearbox_leakage = st.selectbox("Gearbox Leakage", ["No", "Yes"], key="gearbox_leakage")
-                gearbox_abnormal_sound = st.selectbox("Gearbox Abnormal Sound", ["No", "Yes"], key="gearbox_abnormal_sound")
-                # Vibration Monitoring for gearbox
-                st.subheader("Gearbox_Vibration Monitoring")
-                gearbox_vibration_rms_velocity = st.number_input("Gearbox RMS Velocity (mm/s)", min_value=0.0, max_value=100.0,
+            # Motor Inputs
+            st.subheader("Motor Monitoring")
+                motor_de_temp = st.number_input("Motor Driving End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
+                                      key="motor_de_temp")
+                motor_dr_temp = st.number_input("Motor Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
+                                      key="motor_dr_temp")
+                motor_abnormal_sound = st.selectbox("Motor Abnormal Sound", ["No", "Yes"], key="motor_abnormal_sound")
+                # Vibration Monitoring for motor
+                st.subheader("Motor_Vibration Monitoring")
+                motor_vibration_rms_velocity = st.number_input("Motor RMS Velocity (mm/s)", min_value=0.0, max_value=100.0,
                                                          step=0.1,
-                                                         key="gearbox_vibration_rms_velocity")
-                gearbox_vibration_peak_acceleration = st.number_input("Gearbox Peak Acceleration (g)", min_value=0.0, max_value=10.0,
+                                                         key="motor_vibration_rms_velocity")
+                motor_vibration_peak_acceleration = st.number_input("Motor Peak Acceleration (g)", min_value=0.0, max_value=10.0,
                                                               step=0.1,
-                                                              key="gearbox_vibration_peak_acceleration")
-                gearbox_vibration_displacement = st.number_input("Gearbox Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
-                                                         key="gearbox_vibration_displacement")
+                                                              key="motor_vibration_peak_acceleration")
+                motor_vibration_displacement = st.number_input("Motor Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                         key="motor_vibration_displacement")
 
         # Submit Button
         if st.button("Submit Data"):
@@ -524,13 +518,12 @@ elif st.session_state.page == "monitoring":
                     "RMS Velocity (mm/s)": vibration_rms_velocity if is_running else 0.0,
                     "Peak Acceleration (g)": vibration_peak_acceleration if is_running else 0.0,
                     "Displacement (µm)": vibration_displacement if is_running else 0.0,
-                    "Gearbox Temp": gearbox_temp if 'gearbox' in locals() and gearbox else 0.0,
-                    "Gearbox Oil Level": gearbox_oil if 'gearbox' in locals() and gearbox else "N/A",
-                    "Gearbox Leakage": gearbox_leakage if 'gearbox' in locals() and gearbox else "N/A",
-                    "Gearbox Abnormal Sound": gearbox_abnormal_sound if 'gearbox' in locals() and gearbox else "N/A",
-                    "Gearbox RMS Velocity (mm/s)": gearbox_vibration_rms_velocity if 'gearbox' in locals() and gearbox else 0.0,
-                    "Gearbox Peak Acceleration (g)": gearbox_vibration_peak_acceleration if 'gearbox' in locals() and gearbox else 0.0,
-                    "Gearbox Displacement (µm)": gearbox_vibration_displacement if 'gearbox' in locals() and gearbox else 0.0
+                    "Motor Driving End Temp": motor_de_temp if is_running else 0.0,
+                    "Motor Driven End Temp": motor_dr_temp if is_running else 0.0,
+                    "Motor Abnormal Sound": motor_abnormal_sound if is_running else "N/A",
+                    "Motor RMS Velocity (mm/s)": motor_vibration_rms_velocity if is_running else 0.0,
+                    "Motor Peak Acceleration (g)": motor_vibration_peak_acceleration if is_running else 0.0,
+                    "Motor Displacement (µm)": motor_vibration_displacement if is_running else 0.0,
                 }])
         
                 # ✅ Ensure Google Sheets connection exists
@@ -659,39 +652,45 @@ elif st.session_state.page == "monitoring":
                         else:
                             st.warning("Vibration data is missing in the selected dataset.")
 
-                        # Driving and Driven End Temperature Trend for Gearbox
-                        if "Gearbox Temp" in visualization_data.columns:
-                            st.write("#### Gearbox Temperature Trend")
+                        # Motor Driving and Motor Driven End Temperature Trend
+                        if "Motor Driving End Temp" in visualization_data.columns and "Motor Driven End Temp" in visualization_data.columns:
+                            st.write("#### Motor Driving and Motor Driven End Temperature Trend for Equipment")
+                            temp_chart_data = visualization_data[["Date", "Motor Driving End Temp", "Motor Driven End Temp"]].melt(
+                                id_vars="Date",
+                                var_name="Temperature Type",
+                                value_name="Temperature")
                             fig = px.line(
-                                visualization_data,
+                                temp_chart_data,
                                 x="Date",
-                                y="Gearbox Temp",
-                                title="Gearbox Temperature Trend",
-                                labels={"Gearbox Temp": "Temperature (°C)"}
+                                y="Temperature",
+                                color="Temperature Type",
+                                title="Motor Driving and Motor Driven End Temperature Trend",
+                                labels={"Temperature": "Temperature (°C)"}
                             )
                             st.plotly_chart(fig)
                         else:
-                            st.warning("Gearbox Temperature data is missing in the selected dataset.")
+                            st.warning(
+                                "Temperature data (Driving End or Driven End) is missing in the selected dataset.")
 
-                        # Equipment Vibration Trend for Gearbox
-                        if "Gearbox RMS Velocity (mm/s)" in visualization_data.columns and "Gearbox Peak Acceleration (g)" in visualization_data.columns and "Gearbox Displacement (µm)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Gearbox")
-                            gearbox_vibration_chart_data = visualization_data[
-                                ["Date", "Gearbox RMS Velocity (mm/s)", "Gearbox Peak Acceleration (g)",
-                                 "Gearbox Displacement (µm)"]].melt(id_vars="Date",
+                        # Equipment Vibration Trend for Motor 
+                        if "Motor RMS Velocity (mm/s)" in visualization_data.columns and "Motor Peak Acceleration (g)" in visualization_data.columns and "Motor Displacement (µm)" in visualization_data.columns:
+                            st.write("#### Vibration Trend for Motor")
+                            motor_vibration_chart_data = visualization_data[
+                                ["Date", "Motor RMS Velocity (mm/s)", "Motor Peak Acceleration (g)",
+                                 "Motor Displacement (µm)"]].melt(id_vars="Date",
                                                                     var_name="Vibration Type",
                                                                     value_name="Value")
                             fig = px.line(
-                                gearbox_vibration_chart_data,
+                                motor_vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for Gearbox",
+                                title="Vibration Trend for Motor",
                                 labels={"Value": "Value"}
                             )
                             st.plotly_chart(fig)
                         else:
-                            st.warning("Gearbox Vibration data is missing in the selected dataset.")
+                            st.warning("Motor Vibration data is missing in the selected dataset.")
 
                         # Oil Level Distribution for Equipment
                         if "Oil Level" in visualization_data.columns:
@@ -708,31 +707,6 @@ elif st.session_state.page == "monitoring":
                             st.plotly_chart(fig)
                         else:
                             st.warning("Oil Level data is missing in the selected dataset.")
-
-                        # Oil Level Distribution for Gearbox
-                        if "Gearbox Oil Level" in visualization_data.columns:
-                            st.write("#### Oil Level Distribution for Gearbox")
-
-                            # Check for missing or null values
-                            if visualization_data["Gearbox Oil Level"].notna().any():
-                                # Create a summary of Gearbox Oil Level distribution
-                                gearbox_oil_summary = visualization_data[
-                                    "Gearbox Oil Level"].value_counts().reset_index()
-                                gearbox_oil_summary.columns = ["Gearbox Oil Level", "Count"]
-
-                                # Create the bar chart
-                                fig = px.bar(
-                                    gearbox_oil_summary,
-                                    x="Gearbox Oil Level",
-                                    y="Count",
-                                    title="Oil Level Distribution for Gearbox",
-                                    labels={"Count": "Number of Records"}
-                                )
-                                st.plotly_chart(fig)
-                            else:
-                                st.warning("No valid Gearbox Oil Level data available in the selected dataset.")
-                        else:
-                            st.warning("Gearbox Oil Level data is missing in the selected dataset.")
 
 # Add Back Button
 if st.button("Back to Home"):
