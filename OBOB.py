@@ -10,30 +10,46 @@ from google.oauth2.service_account import Credentials
 # Define deviation thresholds for specific equipment
 equipment_thresholds = ({
     # 1670
-    "1670-PA-02A": {"Driving End Temp": {"min": 50, "max": 60}, "Driven End Temp": {"min": 70, "max": 80},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 4}},
-    "1670-PA-02B": {"Driving End Temp": {"min": 39, "max": 48}, "Driven End Temp": {"min": 55, "max": 70},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4.5}},
-    "1670-PA-02C": {"Driving End Temp": {"min": 39, "max": 48}, "Driven End Temp": {"min": 55, "max": 70},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4.5}},
-    "1670-PA-04A": {"Driving End Temp": {"min": 41, "max": 52}, "Driven End Temp": {"min": 39, "max": 49},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4}},
-    "1670-PA-04B": {"Driving End Temp": {"min": 41, "max": 52}, "Driven End Temp": {"min": 39, "max": 49},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4}},
-    "1670-PA-04C": {"Driving End Temp": {"min": 29, "max": 40}, "Driven End Temp": {"min": 29, "max": 40},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 4.8}},
+    "1670-PA-02A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1670-PA-02B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1670-PA-02C": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1670-PA-04A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1670-PA-04B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1670-PA-04C": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}}, 
 
     # 1600
-    "1600-PA-04A": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 68},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4.8}},
-    "1600-PA-04D": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 68},
-                  "RMS Velocity (mm/s)": {"min": 0, "max": 4.8}},
+    "1600-PA-04A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1600-PA-04D": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
 
 # 1680
-    "1680-PA-01A": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 60}, "RMS Velocity (mm/s)": {"min": 4.0, "max": 4.2}},
-    "1680-PA-01B": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 60}, "RMS Velocity (mm/s)": {"min": 4.0, "max": 4.2}},
-    "1680-PH-01A": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 60}, "RMS Velocity (mm/s)": {"min": 4.0, "max": 4.2}},
-    "1680-PH-01B": {"Driving End Temp": {"min": 40, "max": 50}, "Driven End Temp": {"min": 40, "max": 60}, "RMS Velocity (mm/s)": {"min": 4.0, "max": 4.2}},
+    "1680-PA-01A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1680-PA-01B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1680-PH-01A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+    "1680-PH-01B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
+                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
+                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
 })
 
 
@@ -230,7 +246,7 @@ if st.session_state.page == "main":
         st.warning("No data available. Please enter condition monitoring data first.")
     else:
         # ✅ Ensure Required Columns Exist
-        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Oil Level", "Is Running"]
+        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)" "Oil Level", "Is Running"]
         if not validate_columns(data, required_columns):
             st.error("Dataset does not contain all required columns for analysis.")
         else:
@@ -239,7 +255,7 @@ if st.session_state.page == "main":
             data["Is Running"] = data["Is Running"].astype(str).str.lower() == "true"  # Convert to boolean
             
             # ✅ Ensure numeric values
-            for col in ["Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)"]:
+            for col in ["Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)"]:
                 data[col] = pd.to_numeric(data[col], errors="coerce")
     
             # ✅ Filter data based on date range and running equipment
@@ -264,7 +280,10 @@ if st.session_state.page == "main":
                         if (
                             not (thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= thresholds["Driving End Temp"]["max"]) or
                             not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]) or
-                            not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"])
+                            not (thresholds["Motor Driving End Temp"]["min"] <= row["Motor Driving End Temp"] <= thresholds["Motor Driving End Temp"]["max"]) or
+                            not (thresholds["Motor Driven End Temp"]["min"] <= row["Motor Driven End Temp"] <= thresholds["Motor Driven End Temp"]["max"]) or
+                            not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"]) or
+                            not (thresholds["Motor RMS Velocity (mm/s)"]["min"] <= row["Motor RMS Velocity (mm/s)"] <= thresholds["Motor RMS Velocity (mm/s)"]["max"])
                         ):
                             deviations.append(row)
     
@@ -293,6 +312,15 @@ if st.session_state.page == "main":
     
                             if not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"]):
                                 recommendations.append(f"📊 **{equipment}**: RMS Velocity is outside the range {thresholds['RMS Velocity (mm/s)']['min']} - {thresholds['RMS Velocity (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor Driving End Temp"]["min"] <= row["Motor Driving End Temp"] <= thresholds["Motor Driving End Temp"]["max"]):
+                                recommendations.append(f"🔧 **{equipment}**: Motor Driving End Temp is outside the range {thresholds['Motor Driving End Temp']['min']} - {thresholds['Motor Driving End Temp']['max']} °C.")
+    
+                            if not (thresholds["Motor Driven End Temp"]["min"] <= row["Motor Driven End Temp"] <= thresholds["Motor Driven End Temp"]["max"]):
+                                recommendations.append(f"🔧 **{equipment}**: Motor Driven End Temp is outside the range {thresholds['Motor Driven End Temp']['min']} - {thresholds['Motor Driven End Temp']['max']} °C.")
+    
+                            if not (thresholds["Motor RMS Velocity (mm/s)"]["min"] <= row["Motor RMS Velocity (mm/s)"] <= thresholds["Motor RMS Velocity (mm/s)"]["max"]):
+                                recommendations.append(f"📊 **{equipment}**: Motor RMS Velocity is outside the range {thresholds['Motor RMS Velocity (mm/s)']['min']} - {thresholds['Motor RMS Velocity (mm/s)']['max']} mm/s.")
     
                             if row["Oil Level"] == "Low":
                                 recommendations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
