@@ -354,52 +354,52 @@ if st.session_state.page == "main":
                         if thresholds:
                             
                             if not (thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= thresholds["Driving End Temp"]["max"]):
-                            deviations.append(f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
+                                deviations.append(f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
 
                             if not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]):
-                            deviations.append(f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
+                                deviations.append(f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
 
                             if not (thresholds["Motor Driving End Temp"]["min"] <= row["Motor Driving End Temp"] <= thresholds["Motor Driving End Temp"]["max"]):
-                            deviations.append(f"🔧 **{equipment}**: Motor Driving End Temp is outside the range {thresholds['Motor Driving End Temp']['min']} - {thresholds['Motor Driving End Temp']['max']} °C.")
+                                deviations.append(f"🔧 **{equipment}**: Motor Driving End Temp is outside the range {thresholds['Motor Driving End Temp']['min']} - {thresholds['Motor Driving End Temp']['max']} °C.")
 
                             if not (thresholds["Motor Driven End Temp"]["min"] <= row["Motor Driven End Temp"] <= thresholds["Motor Driven End Temp"]["max"]):
-                            deviations.append(f"🔧 **{equipment}**: Motor Driven End Temp is outside the range {thresholds['Motor Driven End Temp']['min']} - {thresholds['Motor Driven End Temp']['max']} °C.")
+                                deviations.append(f"🔧 **{equipment}**: Motor Driven End Temp is outside the range {thresholds['Motor Driven End Temp']['min']} - {thresholds['Motor Driven End Temp']['max']} °C.")
 
                             if not (thresholds["DE Horizontal RMS (mm/s)"]["min"] <= row["DE Horizontal RMS (mm/s)"] <= thresholds["DE Horizontal RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: DE Horizontal RMS is outside the range {thresholds['DE Horizontal RMS (mm/s)']['min']} - {thresholds['DE Horizontal RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: DE Horizontal RMS is outside the range {thresholds['DE Horizontal RMS (mm/s)']['min']} - {thresholds['DE Horizontal RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["NDE Horizontal RMS (mm/s)"]["min"] <= row["NDE Horizontal RMS (mm/s)"] <= thresholds["NDE Horizontal RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: NDE Horizontal RMS is outside the range {thresholds['NDE Horizontal RMS (mm/s)']['min']} - {thresholds['NDE Horizontal RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: NDE Horizontal RMS is outside the range {thresholds['NDE Horizontal RMS (mm/s)']['min']} - {thresholds['NDE Horizontal RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["DE Vertical RMS (mm/s)"]["min"] <= row["DE Vertical RMS (mm/s)"] <= thresholds["DE Vertical RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: DE Vertical RMS is outside the range {thresholds['DE Vertical RMS (mm/s)']['min']} - {thresholds['DE Vertical RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: DE Vertical RMS is outside the range {thresholds['DE Vertical RMS (mm/s)']['min']} - {thresholds['DE Vertical RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["NDE Vertical RMS (mm/s)"]["min"] <= row["NDE Vertical RMS (mm/s)"] <= thresholds["NDE Vertical RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: NDE Vertical RMS is outside the range {thresholds['NDE Vertical RMS (mm/s)']['min']} - {thresholds['NDE Vertical RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: NDE Vertical RMS is outside the range {thresholds['NDE Vertical RMS (mm/s)']['min']} - {thresholds['NDE Vertical RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["DE Axial RMS (mm/s)"]["min"] <= row["DE Axial RMS (mm/s)"] <= thresholds["DE Axial RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: DE Axial RMS is outside the range {thresholds['DE Axial RMS (mm/s)']['min']} - {thresholds['DE Axial RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: DE Axial RMS is outside the range {thresholds['DE Axial RMS (mm/s)']['min']} - {thresholds['DE Axial RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["NDE Axial RMS (mm/s)"]["min"] <= row["NDE Axial RMS (mm/s)"] <= thresholds["NDE Axial RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: NDE Axial RMS is outside the range {thresholds['NDE Axial RMS (mm/s)']['min']} - {thresholds['NDE Axial RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: NDE Axial RMS is outside the range {thresholds['NDE Axial RMS (mm/s)']['min']} - {thresholds['NDE Axial RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor DE Horizontal RMS (mm/s)"]["min"] <= row["Motor DE Horizontal RMS (mm/s)"] <= thresholds["Motor DE Horizontal RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor DE Horizontal RMS is outside the range {thresholds['Motor DE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor DE Horizontal RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor DE Horizontal RMS is outside the range {thresholds['Motor DE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor DE Horizontal RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor NDE Horizontal RMS (mm/s)"]["min"] <= row["Motor NDE Horizontal RMS (mm/s)"] <= thresholds["Motor NDE Horizontal RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor NDE Horizontal RMS is outside the range {thresholds['Motor NDE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor NDE Horizontal RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor NDE Horizontal RMS is outside the range {thresholds['Motor NDE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor NDE Horizontal RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor DE Vertical RMS (mm/s)"]["min"] <= row["Motor DE Vertical RMS (mm/s)"] <= thresholds["Motor DE Vertical RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor DE Vertical RMS is outside the range {thresholds['Motor DE Vertical RMS (mm/s)']['min']} - {thresholds['Motor DE Vertical RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor DE Vertical RMS is outside the range {thresholds['Motor DE Vertical RMS (mm/s)']['min']} - {thresholds['Motor DE Vertical RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor NDE Vertical RMS (mm/s)"]["min"] <= row["Motor NDE Vertical RMS (mm/s)"] <= thresholds["Motor NDE Vertical RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor NDE Vertical RMS is outside the range {thresholds['Motor NDE Vertical RMS (mm/s)']['min']} - {thresholds['Motor NDE Vertical RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor NDE Vertical RMS is outside the range {thresholds['Motor NDE Vertical RMS (mm/s)']['min']} - {thresholds['Motor NDE Vertical RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor DE Axial RMS (mm/s)"]["min"] <= row["Motor DE Axial RMS (mm/s)"] <= thresholds["Motor DE Axial RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor DE Axial RMS is outside the range {thresholds['Motor DE Axial RMS (mm/s)']['min']} - {thresholds['Motor DE Axial RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor DE Axial RMS is outside the range {thresholds['Motor DE Axial RMS (mm/s)']['min']} - {thresholds['Motor DE Axial RMS (mm/s)']['max']} mm/s.")
 
                             if not (thresholds["Motor NDE Axial RMS (mm/s)"]["min"] <= row["Motor NDE Axial RMS (mm/s)"] <= thresholds["Motor NDE Axial RMS (mm/s)"]["max"]):
-                            deviations.append(f"📊 **{equipment}**: Motor NDE Axial RMS is outside the range {thresholds['Motor NDE Axial RMS (mm/s)']['min']} - {thresholds['Motor NDE Axial RMS (mm/s)']['max']} mm/s.")
+                                deviations.append(f"📊 **{equipment}**: Motor NDE Axial RMS is outside the range {thresholds['Motor NDE Axial RMS (mm/s)']['min']} - {thresholds['Motor NDE Axial RMS (mm/s)']['max']} mm/s.")
 
                             # DE Oil Level Check
                             if row["DE Oil Level"] == "Low":
