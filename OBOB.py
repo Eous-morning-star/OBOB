@@ -580,8 +580,8 @@ elif st.session_state.page == "monitoring":
                                       key="de_temp")
             dr_temp = st.number_input("Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
                                       key="dr_temp")
-            oil_level = st.selectbox("Oil Level", ["Normal", "Low", "High"], key="oil_level")
-            oil_level = st.selectbox("Oil Level", ["Normal", "Low", "High"], key="oil_level")
+            de_oil_level = st.selectbox("DE Oil Level", ["Normal", "Low", "High"], key="de_oil_level")
+            nde_oil_level = st.selectbox("NDE Oil Level", ["Normal", "Low", "High"], key="nde_oil_level")
             abnormal_sound = st.selectbox("Abnormal Sound", ["No", "Yes"], key="abnormal_sound")
             leakage = st.selectbox("Leakage", ["No", "Yes"], key="leakage")
             observation = st.text_area("Observations", key="observation")
