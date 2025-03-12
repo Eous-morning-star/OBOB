@@ -409,37 +409,37 @@ if st.session_state.page == "main":
                             if row["NDE Oil Level"] == "Low":
                                 deviations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
     
-                    if recommendations:
-                        for rec in recommendations:
-                            st.info(rec)
-                    else:
-                        st.success("✅ No immediate issues detected in the deviations data.")
-                    # ✅ Add CSS to make the "Download Report" button black
-                    st.markdown(
-                        """
-                        <style>
-                        div.stDownloadButton > button {
-                            background-color: black !important;
-                            color: white !important;
-                            border-radius: 10px !important;
-                            padding: 10px 15px !important;
-                            font-size: 16px !important;
-                            font-weight: bold !important;
-                            border: 2px solid white !important;
-                        }
-                    
-                        div.stDownloadButton > button:hover {
-                            background-color: #333 !important;
-                            color: white !important;
-                        }
-                        </style>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                    # ✅ Download Weekly Report
-                    st.write("#### Download Weekly Report")
-                    csv = deviation_data.to_csv(index=False)
-                    st.download_button("Download Report as CSV", data=csv, file_name="weekly_report.csv", mime="text/csv")
+                        if recommendations:
+                            for rec in recommendations:
+                                st.info(rec)
+                        else:
+                            st.success("✅ No immediate issues detected in the deviations data.")
+                        # ✅ Add CSS to make the "Download Report" button black
+                        st.markdown(
+                            """
+                            <style>
+                            div.stDownloadButton > button {
+                                background-color: black !important;
+                                color: white !important;
+                                border-radius: 10px !important;
+                                padding: 10px 15px !important;
+                                font-size: 16px !important;
+                                font-weight: bold !important;
+                                border: 2px solid white !important;
+                            }
+                        
+                            div.stDownloadButton > button:hover {
+                                background-color: #333 !important;
+                                color: white !important;
+                            }
+                            </style>
+                            """,
+                            unsafe_allow_html=True
+                        )
+                        # ✅ Download Weekly Report
+                        st.write("#### Download Weekly Report")
+                        csv = deviation_data.to_csv(index=False)
+                        st.download_button("Download Report as CSV", data=csv, file_name="weekly_report.csv", mime="text/csv")
 
         # Ensure data is available from KPI calculation
     data = kpis["data"]
