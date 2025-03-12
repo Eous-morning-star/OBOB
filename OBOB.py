@@ -54,7 +54,7 @@ equipment_thresholds = ({
                     "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
                     "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
                 },
-    "1600-PA-04D": {"Driving End Temp": {"min": 0, "max": 70}, "Driven End Temp": {"min": 0, "max": 70},
+    "1600-PA-04B": {"Driving End Temp": {"min": 0, "max": 70}, "Driven End Temp": {"min": 0, "max": 70},
                 "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
                     "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 0, "max": 70}, "Motor Driven End Temp": {"min": 0, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
                     "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
@@ -575,7 +575,7 @@ elif st.session_state.page == "monitoring":
                 "1670-PA-04C"
             ],
             "1600": [
-                "1600-PA-04A", "1600-PA-04D", "1600-KF-02A", "1600-KF-02B", "1600-KF-02C" 
+                "1600-PA-04A", "1600-PA-04B", "1600-KF-02A", "1600-KF-02B", "1600-KF-02C" 
             ],
             "1680": [
                 "1680-PA-01A", "1680-PA-01B", "1680-PH-01A", "1680-PH-01B"
