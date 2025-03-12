@@ -11,45 +11,81 @@ from google.oauth2.service_account import Credentials
 equipment_thresholds = ({
     # 1670
     "1670-PA-02A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1670-PA-02B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1670-PA-02C": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1670-PA-04A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6},"Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1670-PA-04B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1670-PA-04C": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}}, 
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                }, 
 
     # 1600
     "1600-PA-04A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1600-PA-04D": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
 
 # 1680
     "1680-PA-01A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1680-PA-01B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1680-PH-01A": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
     "1680-PH-01B": {"Driving End Temp": {"min": 25, "max": 70}, "Driven End Temp": {"min": 25, "max": 70},
-                "RMS Velocity (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70},
-                "Motor RMS Velocity (mm/s)": {"min": 0, "max": 6}},
+                "DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "NDE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor Driving End Temp": {"min": 25, "max": 70}, "Motor Driven End Temp": {"min": 25, "max": 70}, "Motor DE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Horizontal RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Vertical RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Vertical RMS (mm/s)": {"min": 0, "max": 6}, 
+                    "Motor DE Axial RMS (mm/s)": {"min": 0, "max": 6}, "Motor NDE Axial RMS (mm/s)": {"min": 0, "max": 6}
+                },
 })
 
 
@@ -246,7 +282,8 @@ if st.session_state.page == "main":
         st.warning("No data available. Please enter condition monitoring data first.")
     else:
         # ✅ Ensure Required Columns Exist
-        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)", "Is Running"]
+        required_columns = ["Date", "Equipment", "Driving End Temp", "Driven End Temp", "DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)", "NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)", 
+        "Motor Driving End Temp", "Motor Driven End Temp", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)", "Is Running"]
         if not validate_columns(data, required_columns):
             st.error("Dataset does not contain all required columns for analysis.")
         else:
@@ -255,7 +292,8 @@ if st.session_state.page == "main":
             data["Is Running"] = data["Is Running"].astype(str).str.lower() == "true"  # Convert to boolean
             
             # ✅ Ensure numeric values
-            for col in ["Driving End Temp", "Driven End Temp", "RMS Velocity (mm/s)", "Motor Driving End Temp", "Motor Driven End Temp", "Motor RMS Velocity (mm/s)"]:
+            for col in ["Driving End Temp", "Driven End Temp", "DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)", "NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)", 
+        "Motor Driving End Temp", "Motor Driven End Temp", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]:
                 data[col] = pd.to_numeric(data[col], errors="coerce")
     
             # ✅ Filter data based on date range and running equipment
@@ -282,8 +320,18 @@ if st.session_state.page == "main":
                             not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]) or
                             not (thresholds["Motor Driving End Temp"]["min"] <= row["Motor Driving End Temp"] <= thresholds["Motor Driving End Temp"]["max"]) or
                             not (thresholds["Motor Driven End Temp"]["min"] <= row["Motor Driven End Temp"] <= thresholds["Motor Driven End Temp"]["max"]) or
-                            not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"]) or
-                            not (thresholds["Motor RMS Velocity (mm/s)"]["min"] <= row["Motor RMS Velocity (mm/s)"] <= thresholds["Motor RMS Velocity (mm/s)"]["max"])
+                            not (thresholds["DE Horizontal RMS (mm/s)"]["min"] <= row["DE Horizontal RMS (mm/s)"] <= thresholds["DE Horizontal RMS (mm/s)"]["max"]) or
+                            not (thresholds["NDE Horizontal RMS (mm/s)"]["min"] <= row["NDE Horizontal RMS (mm/s)"] <= thresholds["NDE Horizontal RMS (mm/s)"]["max"]) or
+                            not (thresholds["DE Vertical RMS (mm/s)"]["min"] <= row["DE Vertical RMS (mm/s)"] <= thresholds["DE Vertical RMS (mm/s)"]["max"]) or
+                            not (thresholds["NDE Vertical RMS (mm/s)"]["min"] <= row["NDE Vertical RMS (mm/s)"] <= thresholds["NDE Vertical RMS (mm/s)"]["max"]) or
+                            not (thresholds["DE Axial RMS (mm/s)"]["min"] <= row["DE Axial RMS (mm/s)"] <= thresholds["DE Axial RMS (mm/s)"]["max"]) or
+                            not (thresholds["NDE Axial RMS (mm/s)"]["min"] <= row["DE Axial RMS (mm/s)"] <= thresholds["DE Axial RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor DE Horizontal RMS (mm/s)"]["min"] <= row["Motor DE Horizontal RMS (mm/s)"] <= thresholds["Motor DE Horizontal RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor NDE Horizontal RMS (mm/s)"]["min"] <= row["Motor NDE Horizontal RMS (mm/s)"] <= thresholds["Motor NDE Horizontal RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor DE Vertical RMS (mm/s)"]["min"] <= row["Motor DE Vertical RMS (mm/s)"] <= thresholds["Motor DE Vertical RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor NDE Vertical RMS (mm/s)"]["min"] <= row["Motor NDE Vertical RMS (mm/s)"] <= thresholds["Motor NDE Vertical RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor DE Axial RMS (mm/s)"]["min"] <= row["Motor DE Axial RMS (mm/s)"] <= thresholds["Motor DE Axial RMS (mm/s)"]["max"]) or
+                            not (thresholds["Motor NDE Axial RMS (mm/s)"]["min"] <= row["Motor NDE Axial RMS (mm/s)"] <= thresholds["NDE Axial RMS (mm/s)"]["max"])
                         ):
                             deviations.append(row)
     
@@ -304,26 +352,62 @@ if st.session_state.page == "main":
                         thresholds = equipment_thresholds.get(equipment, {})
     
                         if thresholds:
+                            
                             if not (thresholds["Driving End Temp"]["min"] <= row["Driving End Temp"] <= thresholds["Driving End Temp"]["max"]):
-                                recommendations.append(f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
-    
+            deviations.append(f"🔧 **{equipment}**: Driving End Temp is outside the range {thresholds['Driving End Temp']['min']} - {thresholds['Driving End Temp']['max']} °C.")
+
                             if not (thresholds["Driven End Temp"]["min"] <= row["Driven End Temp"] <= thresholds["Driven End Temp"]["max"]):
-                                recommendations.append(f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
-    
-                            if not (thresholds["RMS Velocity (mm/s)"]["min"] <= row["RMS Velocity (mm/s)"] <= thresholds["RMS Velocity (mm/s)"]["max"]):
-                                recommendations.append(f"📊 **{equipment}**: RMS Velocity is outside the range {thresholds['RMS Velocity (mm/s)']['min']} - {thresholds['RMS Velocity (mm/s)']['max']} mm/s.")
+            deviations.append(f"🔧 **{equipment}**: Driven End Temp is outside the range {thresholds['Driven End Temp']['min']} - {thresholds['Driven End Temp']['max']} °C.")
 
                             if not (thresholds["Motor Driving End Temp"]["min"] <= row["Motor Driving End Temp"] <= thresholds["Motor Driving End Temp"]["max"]):
-                                recommendations.append(f"🔧 **{equipment}**: Motor Driving End Temp is outside the range {thresholds['Motor Driving End Temp']['min']} - {thresholds['Motor Driving End Temp']['max']} °C.")
-    
+            deviations.append(f"🔧 **{equipment}**: Motor Driving End Temp is outside the range {thresholds['Motor Driving End Temp']['min']} - {thresholds['Motor Driving End Temp']['max']} °C.")
+
                             if not (thresholds["Motor Driven End Temp"]["min"] <= row["Motor Driven End Temp"] <= thresholds["Motor Driven End Temp"]["max"]):
-                                recommendations.append(f"🔧 **{equipment}**: Motor Driven End Temp is outside the range {thresholds['Motor Driven End Temp']['min']} - {thresholds['Motor Driven End Temp']['max']} °C.")
-    
-                            if not (thresholds["Motor RMS Velocity (mm/s)"]["min"] <= row["Motor RMS Velocity (mm/s)"] <= thresholds["Motor RMS Velocity (mm/s)"]["max"]):
-                                recommendations.append(f"📊 **{equipment}**: Motor RMS Velocity is outside the range {thresholds['Motor RMS Velocity (mm/s)']['min']} - {thresholds['Motor RMS Velocity (mm/s)']['max']} mm/s.")
-    
-                            if row["Oil Level"] == "Low":
-                                recommendations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
+            deviations.append(f"🔧 **{equipment}**: Motor Driven End Temp is outside the range {thresholds['Motor Driven End Temp']['min']} - {thresholds['Motor Driven End Temp']['max']} °C.")
+
+                            if not (thresholds["DE Horizontal RMS (mm/s)"]["min"] <= row["DE Horizontal RMS (mm/s)"] <= thresholds["DE Horizontal RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: DE Horizontal RMS is outside the range {thresholds['DE Horizontal RMS (mm/s)']['min']} - {thresholds['DE Horizontal RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["NDE Horizontal RMS (mm/s)"]["min"] <= row["NDE Horizontal RMS (mm/s)"] <= thresholds["NDE Horizontal RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: NDE Horizontal RMS is outside the range {thresholds['NDE Horizontal RMS (mm/s)']['min']} - {thresholds['NDE Horizontal RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["DE Vertical RMS (mm/s)"]["min"] <= row["DE Vertical RMS (mm/s)"] <= thresholds["DE Vertical RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: DE Vertical RMS is outside the range {thresholds['DE Vertical RMS (mm/s)']['min']} - {thresholds['DE Vertical RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["NDE Vertical RMS (mm/s)"]["min"] <= row["NDE Vertical RMS (mm/s)"] <= thresholds["NDE Vertical RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: NDE Vertical RMS is outside the range {thresholds['NDE Vertical RMS (mm/s)']['min']} - {thresholds['NDE Vertical RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["DE Axial RMS (mm/s)"]["min"] <= row["DE Axial RMS (mm/s)"] <= thresholds["DE Axial RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: DE Axial RMS is outside the range {thresholds['DE Axial RMS (mm/s)']['min']} - {thresholds['DE Axial RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["NDE Axial RMS (mm/s)"]["min"] <= row["NDE Axial RMS (mm/s)"] <= thresholds["NDE Axial RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: NDE Axial RMS is outside the range {thresholds['NDE Axial RMS (mm/s)']['min']} - {thresholds['NDE Axial RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor DE Horizontal RMS (mm/s)"]["min"] <= row["Motor DE Horizontal RMS (mm/s)"] <= thresholds["Motor DE Horizontal RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor DE Horizontal RMS is outside the range {thresholds['Motor DE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor DE Horizontal RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor NDE Horizontal RMS (mm/s)"]["min"] <= row["Motor NDE Horizontal RMS (mm/s)"] <= thresholds["Motor NDE Horizontal RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor NDE Horizontal RMS is outside the range {thresholds['Motor NDE Horizontal RMS (mm/s)']['min']} - {thresholds['Motor NDE Horizontal RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor DE Vertical RMS (mm/s)"]["min"] <= row["Motor DE Vertical RMS (mm/s)"] <= thresholds["Motor DE Vertical RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor DE Vertical RMS is outside the range {thresholds['Motor DE Vertical RMS (mm/s)']['min']} - {thresholds['Motor DE Vertical RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor NDE Vertical RMS (mm/s)"]["min"] <= row["Motor NDE Vertical RMS (mm/s)"] <= thresholds["Motor NDE Vertical RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor NDE Vertical RMS is outside the range {thresholds['Motor NDE Vertical RMS (mm/s)']['min']} - {thresholds['Motor NDE Vertical RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor DE Axial RMS (mm/s)"]["min"] <= row["Motor DE Axial RMS (mm/s)"] <= thresholds["Motor DE Axial RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor DE Axial RMS is outside the range {thresholds['Motor DE Axial RMS (mm/s)']['min']} - {thresholds['Motor DE Axial RMS (mm/s)']['max']} mm/s.")
+
+                            if not (thresholds["Motor NDE Axial RMS (mm/s)"]["min"] <= row["Motor NDE Axial RMS (mm/s)"] <= thresholds["Motor NDE Axial RMS (mm/s)"]["max"]):
+            deviations.append(f"📊 **{equipment}**: Motor NDE Axial RMS is outside the range {thresholds['Motor NDE Axial RMS (mm/s)']['min']} - {thresholds['Motor NDE Axial RMS (mm/s)']['max']} mm/s.")
+
+                            # DE Oil Level Check
+                            if row["DE Oil Level"] == "Low":
+                                deviations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
+
+                                # NDE Oil Level Check
+                            if row["NDE Oil Level"] == "Low":
+                                deviations.append(f"🛢️ **{equipment}**: Oil level is low. Consider refilling.")
     
                     if recommendations:
                         for rec in recommendations:
@@ -497,19 +581,32 @@ elif st.session_state.page == "monitoring":
             dr_temp = st.number_input("Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
                                       key="dr_temp")
             oil_level = st.selectbox("Oil Level", ["Normal", "Low", "High"], key="oil_level")
+            oil_level = st.selectbox("Oil Level", ["Normal", "Low", "High"], key="oil_level")
             abnormal_sound = st.selectbox("Abnormal Sound", ["No", "Yes"], key="abnormal_sound")
             leakage = st.selectbox("Leakage", ["No", "Yes"], key="leakage")
             observation = st.text_area("Observations", key="observation")
 
-            # Vibration Monitoring
-            st.subheader("Vibration Monitoring")
-            vibration_rms_velocity = st.number_input("RMS Velocity (mm/s)", min_value=0.0, max_value=100.0, step=0.1,
-                                                     key="vibration_rms_velocity")
-            vibration_peak_acceleration = st.number_input("Peak Acceleration (g)", min_value=0.0, max_value=10.0,
+            # Vibration Monitoring for de
+            st.subheader("DE Vibration Monitoring")
+            de_horizontal_vibration_rms_velocity = st.number_input("DE Horizontal RMS (mm/s)", min_value=0.0, max_value=100.0,
+                                                     step=0.1,
+                                                     key="de_horizontal_vibration_rms_velocity")
+            de_vertical_vibration_rms_velocity = st.number_input("DE Vertical RMS (mm/s)", min_value=0.0, max_value=10.0,
                                                           step=0.1,
-                                                          key="vibration_peak_acceleration")
-            vibration_displacement = st.number_input("Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
-                                                     key="vibration_displacement")
+                                                          key="de_vertical_vibration_rms_velocity")
+            de_axial_vibration_rms_velocity = st.number_input("DE Axial RMS (mm/s)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                     key="de_axial_vibration_rms_velocity")
+
+            # Vibration Monitoring for motor nde
+            st.subheader("NDE Vibration Monitoring")
+            nde_horizontal_vibration_rms_velocity = st.number_input("NDE Horizontal RMS (mm/s)", min_value=0.0, max_value=100.0,
+                                                     step=0.1,
+                                                     key="nde_horizontal_vibration_rms_velocity")
+            nde_vertical_vibration_rms_velocity = st.number_input("NDE Vertical RMS (mm/s)", min_value=0.0, max_value=10.0,
+                                                          step=0.1,
+                                                          key="nde_vertical_vibration_rms_velocity")
+            nde_axial_vibration_rms_velocity = st.number_input("NDE Axial RMS (mm/s)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                     key="nde_axial_vibration_rms_velocity")                            
 
             # Motor Inputs
             st.subheader("Motor Monitoring")
@@ -518,16 +615,28 @@ elif st.session_state.page == "monitoring":
             motor_dr_temp = st.number_input("Motor Driven End Temperature (°C)", min_value=0.0, max_value=200.0, step=0.1,
                                   key="motor_dr_temp")
             motor_abnormal_sound = st.selectbox("Motor Abnormal Sound", ["No", "Yes"], key="motor_abnormal_sound")
-            # Vibration Monitoring for motor
-            st.subheader("Motor_Vibration Monitoring")
-            motor_vibration_rms_velocity = st.number_input("Motor RMS Velocity (mm/s)", min_value=0.0, max_value=100.0,
+            
+            # Vibration Monitoring for motor de
+            st.subheader("Motor DE Vibration Monitoring")
+            motor_de_horizontal_vibration_rms_velocity = st.number_input("Motor DE Horizontal RMS (mm/s)", min_value=0.0, max_value=100.0,
                                                      step=0.1,
-                                                     key="motor_vibration_rms_velocity")
-            motor_vibration_peak_acceleration = st.number_input("Motor Peak Acceleration (g)", min_value=0.0, max_value=10.0,
+                                                     key="motor_de_horizontal_vibration_rms_velocity")
+            motor_de_vertical_vibration_rms_velocity = st.number_input("Motor DE Vertical RMS (mm/s)", min_value=0.0, max_value=10.0,
                                                           step=0.1,
-                                                          key="motor_vibration_peak_acceleration")
-            motor_vibration_displacement = st.number_input("Motor Displacement (µm)", min_value=0.0, max_value=1000.0, step=0.1,
-                                                     key="motor_vibration_displacement")
+                                                          key="motor_de_vertical_vibration_rms_velocity")
+            motor_de_axial_vibration_rms_velocity = st.number_input("Motor DE Axial RMS (mm/s)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                     key="motor_de_axial_vibration_rms_velocity")
+
+            # Vibration Monitoring for motor nde
+            st.subheader("Motor DE Vibration Monitoring")
+            motor_nde_horizontal_vibration_rms_velocity = st.number_input("Motor NDE Horizontal RMS (mm/s)", min_value=0.0, max_value=100.0,
+                                                     step=0.1,
+                                                     key="motor_nde_horizontal_vibration_rms_velocity")
+            motor_nde_vertical_vibration_rms_velocity = st.number_input("Motor NDE Vertical RMS (mm/s)", min_value=0.0, max_value=10.0,
+                                                          step=0.1,
+                                                          key="motor_nde_vertical_vibration_rms_velocity")
+            motor_nde_axial_vibration_rms_velocity = st.number_input("Motor NDE Axial RMS (mm/s)", min_value=0.0, max_value=1000.0, step=0.1,
+                                                     key="motor_nde_axial_vibration_rms_velocity")                                        
 
         # Submit Button
         if st.button("Submit Data"):
@@ -539,19 +648,26 @@ elif st.session_state.page == "monitoring":
                     "Is Running": is_running,
                     "Driving End Temp": de_temp if is_running else 0.0,
                     "Driven End Temp": dr_temp if is_running else 0.0,
-                    "Oil Level": oil_level if is_running else "N/A",
+                    "DE Oil Level": de_oil_level if is_running else "N/A",
+                    "NDE Oil Level": nde_oil_level if is_running else "N/A",
                     "Abnormal Sound": abnormal_sound if is_running else "N/A",
                     "Leakage": leakage if is_running else "N/A",
                     "Observation": observation if is_running else "Not Running",
-                    "RMS Velocity (mm/s)": vibration_rms_velocity if is_running else 0.0,
-                    "Peak Acceleration (g)": vibration_peak_acceleration if is_running else 0.0,
-                    "Displacement (µm)": vibration_displacement if is_running else 0.0,
+                    "DE Horizontal RMS (mm/s)": de_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "DE Vertical RMS (mm/s)": de_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "DE Axial RMS (mm/s)": de_axial_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Horizontal RMS (mm/s)": nde_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Vertical RMS (mm/s)": nde_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Axial RMS (mm/s)": nde_axial_vibration_rms_velocity if is_running else 0.0,
                     "Motor Driving End Temp": motor_de_temp if is_running else 0.0,
                     "Motor Driven End Temp": motor_dr_temp if is_running else 0.0,
                     "Motor Abnormal Sound": motor_abnormal_sound if is_running else "N/A",
-                    "Motor RMS Velocity (mm/s)": motor_vibration_rms_velocity if is_running else 0.0,
-                    "Motor Peak Acceleration (g)": motor_vibration_peak_acceleration if is_running else 0.0,
-                    "Motor Displacement (µm)": motor_vibration_displacement if is_running else 0.0,
+                    "Motor DE Horizontal RMS (mm/s)": motor_de_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "Motor DE Vertical RMS (mm/s)": motor_de_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "Motor DE Axial RMS (mm/s)": motor_de_axial_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Horizontal RMS (mm/s)": motor_nde_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Vertical RMS (mm/s)": motor_nde_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Axial RMS (mm/s)": motor_nde_axial_vibration_rms_velocity if is_running else 0.0,
                 }])
         
                 # ✅ Ensure Google Sheets connection exists
@@ -651,11 +767,11 @@ elif st.session_state.page == "monitoring":
                             st.warning(
                                 "Temperature data (Driving End or Driven End) is missing in the selected dataset.")
 
-                        # Equipment Vibration Trend
-                        if "RMS Velocity (mm/s)" in visualization_data.columns and "Peak Acceleration (g)" in visualization_data.columns and "Displacement (µm)" in visualization_data.columns:
+                        # Equipment DE Vibration Trend
+                        if "DE Horizontal RMS (mm/s)" in visualization_data.columns and "DE Vertical RMS (mm/s)" in visualization_data.columns and "DE Axial RMS (mm/s)" in visualization_data.columns:
                             st.write("#### Vibration Trend for Equipment")
                             vibration_chart_data = visualization_data[
-                                ["Date", "RMS Velocity (mm/s)", "Peak Acceleration (g)", "Displacement (µm)"]].melt(
+                                ["Date", "DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)"]].melt(
                                 id_vars="Date",
                                 var_name="Vibration Type",
                                 value_name="Value")
@@ -664,12 +780,32 @@ elif st.session_state.page == "monitoring":
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for Equipment",
+                                title="Vibration Trend for Equipment DE",
                                 labels={"Value": "Value"}
                             )
                             st.plotly_chart(fig)
                         else:
-                            st.warning("Vibration data is missing in the selected dataset.")
+                            st.warning("DE Vibration data is missing in the selected dataset.")
+
+                        # Equipment NDE Vibration Trend
+                        if "NDE Horizontal RMS (mm/s)" in visualization_data.columns and "NDE Vertical RMS (mm/s)" in visualization_data.columns and "NDE Axial RMS (mm/s)" in visualization_data.columns:
+                            st.write("#### Vibration Trend for Equipment")
+                            vibration_chart_data = visualization_data[
+                                ["Date", "NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)"]].melt(
+                                id_vars="Date",
+                                var_name="Vibration Type",
+                                value_name="Value")
+                            fig = px.line(
+                                vibration_chart_data,
+                                x="Date",
+                                y="Value",
+                                color="Vibration Type",
+                                title="Vibration Trend for Equipment NDE ",
+                                labels={"Value": "Value"}
+                            )
+                            st.plotly_chart(fig)
+                        else:
+                            st.warning("NDE Vibration data is missing in the selected dataset.")
 
                         # Motor Driving and Motor Driven End Temperature Trend
                         if "Motor Driving End Temp" in visualization_data.columns and "Motor Driven End Temp" in visualization_data.columns:
@@ -691,41 +827,77 @@ elif st.session_state.page == "monitoring":
                             st.warning(
                                 "Temperature data (Driving End or Driven End) is missing in the selected dataset.")
 
-                        # Equipment Vibration Trend for Motor 
-                        if "Motor RMS Velocity (mm/s)" in visualization_data.columns and "Motor Peak Acceleration (g)" in visualization_data.columns and "Motor Displacement (µm)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Motor")
-                            motor_vibration_chart_data = visualization_data[
-                                ["Date", "Motor RMS Velocity (mm/s)", "Motor Peak Acceleration (g)",
-                                 "Motor Displacement (µm)"]].melt(id_vars="Date",
-                                                                    var_name="Vibration Type",
-                                                                    value_name="Value")
+                        # Motor DE Vibration Trend
+                        if "Motor DE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor DE Vertical RMS (mm/s)" in visualization_data.columns and "Motor DE Axial RMS (mm/s)" in visualization_data.columns:
+                            st.write("#### Vibration Trend for Equipment")
+                            vibration_chart_data = visualization_data[
+                                ["Date", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]].melt(
+                                id_vars="Date",
+                                var_name="Vibration Type",
+                                value_name="Value")
                             fig = px.line(
-                                motor_vibration_chart_data,
+                                vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for Motor",
+                                title="Vibration Trend for MOTOR DE",
                                 labels={"Value": "Value"}
                             )
                             st.plotly_chart(fig)
                         else:
-                            st.warning("Motor Vibration data is missing in the selected dataset.")
+                            st.warning("Motor DE Vibration data is missing in the selected dataset.")
 
-                        # Oil Level Distribution for Equipment
+                        # Motor NDE Vibration Trend
+                        if "Motor NDE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor NDE Vertical RMS (mm/s)" in visualization_data.columns and "Motor NDE Axial RMS (mm/s)" in visualization_data.columns:
+                            st.write("#### Vibration Trend for Equipment")
+                            vibration_chart_data = visualization_data[
+                                ["Date", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]].melt(
+                                id_vars="Date",
+                                var_name="Vibration Type",
+                                value_name="Value")
+                            fig = px.line(
+                                vibration_chart_data,
+                                x="Date",
+                                y="Value",
+                                color="Vibration Type",
+                                title="Vibration Trend for MOTOR NDE",
+                                labels={"Value": "Value"}
+                            )
+                            st.plotly_chart(fig)
+                        else:
+                            st.warning("Motor NDE Vibration data is missing in the selected dataset.")
+
+                        # Oil Level Distribution for Equipment DE
                         if "Oil Level" in visualization_data.columns:
-                            st.write("#### Oil Level Distribution for Equipment")
-                            oil_summary = visualization_data["Oil Level"].value_counts().reset_index()
-                            oil_summary.columns = ["Oil Level", "Count"]
+                            st.write("#### Oil Level Distribution for Equipment DE")
+                            oil_summary = visualization_data["DE Oil Level"].value_counts().reset_index()
+                            oil_summary.columns = ["DE Oil Level", "Count"]
                             fig = px.bar(
                                 oil_summary,
-                                x="Oil Level",
+                                x="DE Oil Level",
                                 y="Count",
-                                title="Oil Level Distribution for Equipment",
+                                title="Oil Level Distribution for Equipment DE",
                                 labels={"Count": "Number of Records"}
                             )
                             st.plotly_chart(fig)
                         else:
-                            st.warning("Oil Level data is missing in the selected dataset.")
+                            st.warning("DE Oil Level data is missing in the selected dataset.")
+
+                        # Oil Level Distribution for Equipment NDE
+                        if "Oil Level" in visualization_data.columns:
+                            st.write("#### Oil Level Distribution for Equipment NDE")
+                            oil_summary = visualization_data["NDE Oil Level"].value_counts().reset_index()
+                            oil_summary.columns = ["NDE Oil Level", "Count"]
+                            fig = px.bar(
+                                oil_summary,
+                                x="NDE Oil Level",
+                                y="Count",
+                                title="Oil Level Distribution for Equipment NDE",
+                                labels={"Count": "Number of Records"}
+                            )
+                            st.plotly_chart(fig)
+                        else:
+                            st.warning("NDE Oil Level data is missing in the selected dataset.")
 
 # Add Back Button
 if st.button("Back to Home"):
