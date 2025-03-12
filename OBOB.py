@@ -638,6 +638,39 @@ elif st.session_state.page == "monitoring":
                                                      key="motor_nde_axial_vibration_rms_velocity")                                        
 
         # Submit Button
+        # Function to reset form fields
+def reset_form():
+    st.session_state["date"] = datetime.now().date()
+    st.session_state["area"] = list(equipment_lists.keys())[0]  # Reset to first area
+    st.session_state["equipment"] = equipment_lists[st.session_state["area"]][0]  # Reset equipment
+    st.session_state["is_running"] = False
+    st.session_state["de_temp"] = 0.0
+    st.session_state["dr_temp"] = 0.0
+    st.session_state["de_oil_level"] = "Normal"
+    st.session_state["nde_oil_level"] = "Normal"
+    st.session_state["abnormal_sound"] = "No"
+    st.session_state["leakage"] = "No"
+    st.session_state["observation"] = ""
+
+    # Vibration Monitoring
+    st.session_state["de_horizontal_vibration_rms_velocity"] = 0.0
+    st.session_state["de_vertical_vibration_rms_velocity"] = 0.0
+    st.session_state["de_axial_vibration_rms_velocity"] = 0.0
+    st.session_state["nde_horizontal_vibration_rms_velocity"] = 0.0
+    st.session_state["nde_vertical_vibration_rms_velocity"] = 0.0
+    st.session_state["nde_axial_vibration_rms_velocity"] = 0.0
+
+    # Motor Inputs
+    st.session_state["motor_de_temp"] = 0.0
+    st.session_state["motor_dr_temp"] = 0.0
+    st.session_state["motor_abnormal_sound"] = "No"
+    st.session_state["motor_de_horizontal_vibration_rms_velocity"] = 0.0
+    st.session_state["motor_de_vertical_vibration_rms_velocity"] = 0.0
+    st.session_state["motor_de_axial_vibration_rms_velocity"] = 0.0
+    st.session_state["motor_nde_horizontal_vibration_rms_velocity"] = 0.0
+    st.session_state["motor_nde_vertical_vibration_rms_velocity"] = 0.0
+    st.session_state["motor_nde_axial_vibration_rms_velocity"] = 0.0
+
         if st.button("Submit Data"):
             try:
                 new_data = pd.DataFrame([{
@@ -669,23 +702,24 @@ elif st.session_state.page == "monitoring":
                     "Motor NDE Axial RMS (mm/s)": motor_nde_axial_vibration_rms_velocity if is_running else 0.0,
                 }])
         
-                # ✅ Ensure Google Sheets connection exists
+                # ✅ Save Data to Google Sheets
                 if sheet:
                     existing_data = sheet.get_all_records()
                     df = pd.DataFrame(existing_data)
                     df = pd.concat([df, new_data], ignore_index=True)
-                
-                    # ✅ Save updated data to Google Sheets
+        
                     sheet.clear()
                     sheet.update([df.columns.values.tolist()] + df.values.tolist())
-                
+        
                     st.success("✅ Data saved to Google Sheets!")
-
+        
+                    # ✅ Reset the form fields
+                    reset_form()
+        
                 else:
                     st.error("❌ Unable to save data: Google Sheet connection is missing.")
             except Exception as e:
                 st.error(f"Error saving data: {e}")
-
 
     # Tab 2: Reports and Visualizations
     with tab2:
