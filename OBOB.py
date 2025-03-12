@@ -628,7 +628,7 @@ elif st.session_state.page == "monitoring":
                                                      key="motor_de_axial_vibration_rms_velocity")
 
             # Vibration Monitoring for motor nde
-            st.subheader("Motor DE Vibration Monitoring")
+            st.subheader("Motor NDE Vibration Monitoring")
             motor_nde_horizontal_vibration_rms_velocity = st.number_input("Motor NDE Horizontal RMS (mm/s)", min_value=0.0, max_value=100.0,
                                                      step=0.1,
                                                      key="motor_nde_horizontal_vibration_rms_velocity")
