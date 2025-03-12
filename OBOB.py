@@ -647,8 +647,15 @@ elif st.session_state.page == "monitoring":
                                                      key="motor_nde_axial_vibration_rms_velocity")                                        
 
         # Submit Button
+        
         if st.button("Submit Data"):
             try:
+                # ✅ Retrieve values correctly from session state
+                date = st.session_state.date
+                area = st.session_state.area
+                equipment = st.session_state.equipment  # 🔥 Fix: Ensure we get equipment correctly
+                is_running = st.session_state.is_running
+                
                 new_data = pd.DataFrame([{
                     "Date": date.strftime("%Y-%m-%d"),
                     "Area": area,
