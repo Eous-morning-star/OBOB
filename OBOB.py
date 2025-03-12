@@ -638,100 +638,49 @@ elif st.session_state.page == "monitoring":
                                                      key="motor_nde_axial_vibration_rms_velocity")                                        
 
         # Submit Button
-def reset_form():
-    for key in [
-        "date", "area", "equipment", "is_running", "de_temp", "dr_temp",
-        "de_oil_level", "nde_oil_level", "abnormal_sound", "leakage", "observation",
-        "de_horizontal_vibration_rms_velocity", "de_vertical_vibration_rms_velocity", "de_axial_vibration_rms_velocity",
-        "nde_horizontal_vibration_rms_velocity", "nde_vertical_vibration_rms_velocity", "nde_axial_vibration_rms_velocity",
-        "motor_de_temp", "motor_dr_temp", "motor_abnormal_sound",
-        "motor_de_horizontal_vibration_rms_velocity", "motor_de_vertical_vibration_rms_velocity", "motor_de_axial_vibration_rms_velocity",
-        "motor_nde_horizontal_vibration_rms_velocity", "motor_nde_vertical_vibration_rms_velocity", "motor_nde_axial_vibration_rms_velocity"
-    ]:
-        if key in st.session_state:
-            del st.session_state[key]  # Clear session state value
-
-# Function to reset form fields
-def reset_form():
-    st.session_state["date"] = datetime.now().date()
-    st.session_state["area"] = list(equipment_lists.keys())[0]  # Reset to first area
-    st.session_state["equipment"] = equipment_lists[st.session_state["area"]][0]  # Reset equipment
-    st.session_state["is_running"] = False
-    st.session_state["de_temp"] = 0.0
-    st.session_state["dr_temp"] = 0.0
-    st.session_state["de_oil_level"] = "Normal"
-    st.session_state["nde_oil_level"] = "Normal"
-    st.session_state["abnormal_sound"] = "No"
-    st.session_state["leakage"] = "No"
-    st.session_state["observation"] = ""
-
-    # Vibration Monitoring
-    st.session_state["de_horizontal_vibration_rms_velocity"] = 0.0
-    st.session_state["de_vertical_vibration_rms_velocity"] = 0.0
-    st.session_state["de_axial_vibration_rms_velocity"] = 0.0
-    st.session_state["nde_horizontal_vibration_rms_velocity"] = 0.0
-    st.session_state["nde_vertical_vibration_rms_velocity"] = 0.0
-    st.session_state["nde_axial_vibration_rms_velocity"] = 0.0
-
-    # Motor Inputs
-    st.session_state["motor_de_temp"] = 0.0
-    st.session_state["motor_dr_temp"] = 0.0
-    st.session_state["motor_abnormal_sound"] = "No"
-    st.session_state["motor_de_horizontal_vibration_rms_velocity"] = 0.0
-    st.session_state["motor_de_vertical_vibration_rms_velocity"] = 0.0
-    st.session_state["motor_de_axial_vibration_rms_velocity"] = 0.0
-    st.session_state["motor_nde_horizontal_vibration_rms_velocity"] = 0.0
-    st.session_state["motor_nde_vertical_vibration_rms_velocity"] = 0.0
-    st.session_state["motor_nde_axial_vibration_rms_velocity"] = 0.0
-
         if st.button("Submit Data"):
             try:
                 new_data = pd.DataFrame([{
-                    "Date": st.session_state["date"].strftime("%Y-%m-%d"),
-                    "Area": st.session_state["area"],
-                    "Equipment": st.session_state["equipment"],
-                    "Is Running": st.session_state["is_running"],
-                    "Driving End Temp": st.session_state["de_temp"] if st.session_state["is_running"] else 0.0,
-                    "Driven End Temp": st.session_state["dr_temp"] if st.session_state["is_running"] else 0.0,
-                    "DE Oil Level": st.session_state["de_oil_level"] if st.session_state["is_running"] else "N/A",
-                    "NDE Oil Level": st.session_state["nde_oil_level"] if st.session_state["is_running"] else "N/A",
-                    "Abnormal Sound": st.session_state["abnormal_sound"] if st.session_state["is_running"] else "N/A",
-                    "Leakage": st.session_state["leakage"] if st.session_state["is_running"] else "N/A",
-                    "Observation": st.session_state["observation"] if st.session_state["is_running"] else "Not Running",
-                    "DE Horizontal RMS (mm/s)": st.session_state["de_horizontal_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "DE Vertical RMS (mm/s)": st.session_state["de_vertical_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "DE Axial RMS (mm/s)": st.session_state["de_axial_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "NDE Horizontal RMS (mm/s)": st.session_state["nde_horizontal_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "NDE Vertical RMS (mm/s)": st.session_state["nde_vertical_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "NDE Axial RMS (mm/s)": st.session_state["nde_axial_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor Driving End Temp": st.session_state["motor_de_temp"] if st.session_state["is_running"] else 0.0,
-                    "Motor Driven End Temp": st.session_state["motor_dr_temp"] if st.session_state["is_running"] else 0.0,
-                    "Motor Abnormal Sound": st.session_state["motor_abnormal_sound"] if st.session_state["is_running"] else "N/A",
-                    "Motor DE Horizontal RMS (mm/s)": st.session_state["motor_de_horizontal_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor DE Vertical RMS (mm/s)": st.session_state["motor_de_vertical_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor DE Axial RMS (mm/s)": st.session_state["motor_de_axial_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor NDE Horizontal RMS (mm/s)": st.session_state["motor_nde_horizontal_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor NDE Vertical RMS (mm/s)": st.session_state["motor_nde_vertical_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
-                    "Motor NDE Axial RMS (mm/s)": st.session_state["motor_nde_axial_vibration_rms_velocity"] if st.session_state["is_running"] else 0.0,
+                    "Date": date.strftime("%Y-%m-%d"),
+                    "Area": area,
+                    "Equipment": equipment,
+                    "Is Running": is_running,
+                    "Driving End Temp": de_temp if is_running else 0.0,
+                    "Driven End Temp": dr_temp if is_running else 0.0,
+                    "DE Oil Level": de_oil_level if is_running else "N/A",
+                    "NDE Oil Level": nde_oil_level if is_running else "N/A",
+                    "Abnormal Sound": abnormal_sound if is_running else "N/A",
+                    "Leakage": leakage if is_running else "N/A",
+                    "Observation": observation if is_running else "Not Running",
+                    "DE Horizontal RMS (mm/s)": de_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "DE Vertical RMS (mm/s)": de_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "DE Axial RMS (mm/s)": de_axial_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Horizontal RMS (mm/s)": nde_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Vertical RMS (mm/s)": nde_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "NDE Axial RMS (mm/s)": nde_axial_vibration_rms_velocity if is_running else 0.0,
+                    "Motor Driving End Temp": motor_de_temp if is_running else 0.0,
+                    "Motor Driven End Temp": motor_dr_temp if is_running else 0.0,
+                    "Motor Abnormal Sound": motor_abnormal_sound if is_running else "N/A",
+                    "Motor DE Horizontal RMS (mm/s)": motor_de_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "Motor DE Vertical RMS (mm/s)": motor_de_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "Motor DE Axial RMS (mm/s)": motor_de_axial_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Horizontal RMS (mm/s)": motor_nde_horizontal_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Vertical RMS (mm/s)": motor_nde_vertical_vibration_rms_velocity if is_running else 0.0,
+                    "Motor NDE Axial RMS (mm/s)": motor_nde_axial_vibration_rms_velocity if is_running else 0.0,
                 }])
         
-                # ✅ Save Data to Google Sheets
+                # ✅ Ensure Google Sheets connection exists
                 if sheet:
                     existing_data = sheet.get_all_records()
                     df = pd.DataFrame(existing_data)
                     df = pd.concat([df, new_data], ignore_index=True)
-        
+                
+                    # ✅ Save updated data to Google Sheets
                     sheet.clear()
                     sheet.update([df.columns.values.tolist()] + df.values.tolist())
-        
+                
                     st.success("✅ Data saved to Google Sheets!")
-        
-                    # ✅ Reset form fields
-                    reset_form()
-        
-                    # ✅ Force a rerun to clear fields
-                    st.experimental_rerun()
-        
+
                 else:
                     st.error("❌ Unable to save data: Google Sheet connection is missing.")
             except Exception as e:
