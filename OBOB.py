@@ -768,16 +768,16 @@ elif st.session_state.page == "monitoring":
                         st.write(f"### Filtered Data for {selected_equipment}")
                         st.dataframe(filtered_data)
 
-                        # Visualizations
+                        # ✅ Visualization Section
                         st.subheader("Data Visualizations")
-
+                        
                         # Allow user to choose the dataset for visualization
                         data_option = st.radio(
                             "Select data for visualization:",
                             options=["General Table (All Data)", "Filtered Table"],
                             key="data_option"
                         )
-
+                        
                         # Select appropriate dataset based on user choice
                         if data_option == "General Table (All Data)":
                             visualization_data = data  # Use the full dataset
@@ -785,14 +785,21 @@ elif st.session_state.page == "monitoring":
                         else:
                             visualization_data = filtered_data  # Use the filtered dataset
                             st.write("Using data from the filtered table.")
-
+                        
+                        # ✅ Retrieve max limits from thresholds
+                        if selected_equipment in equipment_thresholds:
+                            thresholds = equipment_thresholds[selected_equipment]
+                        else:
+                            thresholds = {}  # Default to empty if no thresholds available
+                        
                         # Driving and Driven End Temperature Trend
                         if "Driving End Temp" in visualization_data.columns and "Driven End Temp" in visualization_data.columns:
                             st.write("#### Driving and Driven End Temperature Trend for Equipment")
                             temp_chart_data = visualization_data[["Date", "Driving End Temp", "Driven End Temp"]].melt(
                                 id_vars="Date",
                                 var_name="Temperature Type",
-                                value_name="Temperature")
+                                value_name="Temperature"
+                            )
                             fig = px.line(
                                 temp_chart_data,
                                 x="Date",
@@ -801,58 +808,79 @@ elif st.session_state.page == "monitoring":
                                 title="Driving and Driven End Temperature Trend",
                                 labels={"Temperature": "Temperature (°C)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            if "Driving End Temp" in thresholds:
+                                fig.add_hline(y=thresholds["Driving End Temp"]["max"], line_dash="dash", line_color="red",
+                                              annotation_text="Max Driving Temp")
+                            if "Driven End Temp" in thresholds:
+                                fig.add_hline(y=thresholds["Driven End Temp"]["max"], line_dash="dash", line_color="blue",
+                                              annotation_text="Max Driven Temp")
+                        
                             st.plotly_chart(fig)
                         else:
-                            st.warning(
-                                "Temperature data (Driving End or Driven End) is missing in the selected dataset.")
-
+                            st.warning("Temperature data (Driving End or Driven End) is missing in the selected dataset.")
+                        
                         # Equipment DE Vibration Trend
-                        if "DE Horizontal RMS (mm/s)" in visualization_data.columns and "DE Vertical RMS (mm/s)" in visualization_data.columns and "DE Axial RMS (mm/s)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Equipment")
+                        if all(col in visualization_data.columns for col in ["DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)"]):
+                            st.write("#### Vibration Trend for Equipment DE")
                             vibration_chart_data = visualization_data[
-                                ["Date", "DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)"]].melt(
-                                id_vars="Date",
-                                var_name="Vibration Type",
-                                value_name="Value")
+                                ["Date", "DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)"]
+                            ].melt(id_vars="Date", var_name="Vibration Type", value_name="Value")
+                        
                             fig = px.line(
                                 vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
                                 title="Vibration Trend for Equipment DE",
-                                labels={"Value": "Value"}
+                                labels={"Value": "Vibration RMS (mm/s)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            for vib_type in ["DE Horizontal RMS (mm/s)", "DE Vertical RMS (mm/s)", "DE Axial RMS (mm/s)"]:
+                                if vib_type in thresholds:
+                                    fig.add_hline(y=thresholds[vib_type]["max"], line_dash="dash", line_color="red",
+                                                  annotation_text=f"Max {vib_type}")
+                        
                             st.plotly_chart(fig)
                         else:
                             st.warning("DE Vibration data is missing in the selected dataset.")
-
+                        
                         # Equipment NDE Vibration Trend
-                        if "NDE Horizontal RMS (mm/s)" in visualization_data.columns and "NDE Vertical RMS (mm/s)" in visualization_data.columns and "NDE Axial RMS (mm/s)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Equipment")
+                        if all(col in visualization_data.columns for col in ["NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)"]):
+                            st.write("#### Vibration Trend for Equipment NDE")
                             vibration_chart_data = visualization_data[
-                                ["Date", "NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)"]].melt(
-                                id_vars="Date",
-                                var_name="Vibration Type",
-                                value_name="Value")
+                                ["Date", "NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)"]
+                            ].melt(id_vars="Date", var_name="Vibration Type", value_name="Value")
+                        
                             fig = px.line(
                                 vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for Equipment NDE ",
-                                labels={"Value": "Value"}
+                                title="Vibration Trend for Equipment NDE",
+                                labels={"Value": "Vibration RMS (mm/s)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            for vib_type in ["NDE Horizontal RMS (mm/s)", "NDE Vertical RMS (mm/s)", "NDE Axial RMS (mm/s)"]:
+                                if vib_type in thresholds:
+                                    fig.add_hline(y=thresholds[vib_type]["max"], line_dash="dash", line_color="red",
+                                                  annotation_text=f"Max {vib_type}")
+                        
                             st.plotly_chart(fig)
                         else:
                             st.warning("NDE Vibration data is missing in the selected dataset.")
-
+                        
                         # Motor Driving and Motor Driven End Temperature Trend
                         if "Motor Driving End Temp" in visualization_data.columns and "Motor Driven End Temp" in visualization_data.columns:
                             st.write("#### Motor Driving and Motor Driven End Temperature Trend for Equipment")
                             temp_chart_data = visualization_data[["Date", "Motor Driving End Temp", "Motor Driven End Temp"]].melt(
                                 id_vars="Date",
                                 var_name="Temperature Type",
-                                value_name="Temperature")
+                                value_name="Temperature"
+                            )
                             fig = px.line(
                                 temp_chart_data,
                                 x="Date",
@@ -861,51 +889,70 @@ elif st.session_state.page == "monitoring":
                                 title="Motor Driving and Motor Driven End Temperature Trend",
                                 labels={"Temperature": "Temperature (°C)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            if "Motor Driving End Temp" in thresholds:
+                                fig.add_hline(y=thresholds["Motor Driving End Temp"]["max"], line_dash="dash", line_color="red",
+                                              annotation_text="Max Motor Driving Temp")
+                            if "Motor Driven End Temp" in thresholds:
+                                fig.add_hline(y=thresholds["Motor Driven End Temp"]["max"], line_dash="dash", line_color="blue",
+                                              annotation_text="Max Motor Driven Temp")
+                        
                             st.plotly_chart(fig)
                         else:
-                            st.warning(
-                                "Temperature data (Driving End or Driven End) is missing in the selected dataset.")
-
+                            st.warning("Motor Temperature data is missing in the selected dataset.")
+                        
                         # Motor DE Vibration Trend
-                        if "Motor DE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor DE Vertical RMS (mm/s)" in visualization_data.columns and "Motor DE Axial RMS (mm/s)" in visualization_data.columns:
+                        if all(col in visualization_data.columns for col in ["Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]):
                             st.write("#### Vibration Trend for Motor DE")
                             vibration_chart_data = visualization_data[
-                                ["Date", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]].melt(
-                                id_vars="Date",
-                                var_name="Vibration Type",
-                                value_name="Value")
+                                ["Date", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]
+                            ].melt(id_vars="Date", var_name="Vibration Type", value_name="Value")
+                        
                             fig = px.line(
                                 vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for MOTOR DE",
-                                labels={"Value": "Value"}
+                                title="Vibration Trend for Motor DE",
+                                labels={"Value": "Vibration RMS (mm/s)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            for vib_type in ["Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]:
+                                if vib_type in thresholds:
+                                    fig.add_hline(y=thresholds[vib_type]["max"], line_dash="dash", line_color="red",
+                                                  annotation_text=f"Max {vib_type}")
+                        
                             st.plotly_chart(fig)
                         else:
                             st.warning("Motor DE Vibration data is missing in the selected dataset.")
-
+                        
                         # Motor NDE Vibration Trend
-                        if "Motor NDE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor NDE Vertical RMS (mm/s)" in visualization_data.columns and "Motor NDE Axial RMS (mm/s)" in visualization_data.columns:
+                        if all(col in visualization_data.columns for col in ["Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]):
                             st.write("#### Vibration Trend for Motor NDE")
                             vibration_chart_data = visualization_data[
-                                ["Date", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]].melt(
-                                id_vars="Date",
-                                var_name="Vibration Type",
-                                value_name="Value")
+                                ["Date", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]
+                            ].melt(id_vars="Date", var_name="Vibration Type", value_name="Value")
+                        
                             fig = px.line(
                                 vibration_chart_data,
                                 x="Date",
                                 y="Value",
                                 color="Vibration Type",
-                                title="Vibration Trend for MOTOR NDE",
-                                labels={"Value": "Value"}
+                                title="Vibration Trend for Motor NDE",
+                                labels={"Value": "Vibration RMS (mm/s)"}
                             )
+                        
+                            # ✅ Add max limit lines if available
+                            for vib_type in ["Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]:
+                                if vib_type in thresholds:
+                                    fig.add_hline(y=thresholds[vib_type]["max"], line_dash="dash", line_color="red",
+                                                  annotation_text=f"Max {vib_type}")
+                        
                             st.plotly_chart(fig)
                         else:
                             st.warning("Motor NDE Vibration data is missing in the selected dataset.")
-
 # Add Back Button
 if st.button("Back to Home"):
     st.session_state.page = "main"
