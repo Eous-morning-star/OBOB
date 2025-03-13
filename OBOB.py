@@ -303,13 +303,6 @@ st.image("indorama_logo.png", use_container_width=True)
 if "page" not in st.session_state:
     st.session_state.page = "main"
 
-if st.session_state.page == "main":
-    st.header("Main Page")
-    
-    if st.button("Next"):
-        st.session_state.page = "monitoring"
-        st.experimental_rerun()  # 🔥 Force an instant refresh
-
         #Main Page
     st.subheader("Your Gateway to Enhanced Maintenance Efficiency")
 
