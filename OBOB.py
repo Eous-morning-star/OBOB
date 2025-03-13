@@ -25,7 +25,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 # ✅ Set your passkey (Change this to your desired passkey)
 PASSKEY = "indorama2024"  # 🔥 Change this to your secret passkey
 
@@ -55,9 +54,6 @@ if not st.session_state.authenticated:
 
 # ✅ If authenticated, show the main app
 st.sidebar.success("🔓 Access Granted")
-
-if "page" not in st.session_state:
-    st.session_state.page = "main"
 
 # Define deviation thresholds for specific equipment
 equipment_thresholds = ({
@@ -303,6 +299,7 @@ st.image("indorama_logo.png", use_container_width=True)
 if "page" not in st.session_state:
     st.session_state.page = "main"
 
+if st.session_state.page == "main":
         #Main Page
     st.subheader("Your Gateway to Enhanced Maintenance Efficiency")
 
@@ -606,8 +603,6 @@ if "page" not in st.session_state:
     # Next Button to Navigate
     if st.button("Next"):
         st.session_state.page = "monitoring"
-        st.experimental_rerun()  # 🔥 This forces an immediate re-run with the new state
-
 
 elif st.session_state.page == "monitoring":
             
