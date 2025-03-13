@@ -862,7 +862,7 @@ elif st.session_state.page == "monitoring":
 
                         # Motor DE Vibration Trend
                         if "Motor DE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor DE Vertical RMS (mm/s)" in visualization_data.columns and "Motor DE Axial RMS (mm/s)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Equipment")
+                            st.write("#### Vibration Trend for Motor DE")
                             vibration_chart_data = visualization_data[
                                 ["Date", "Motor DE Horizontal RMS (mm/s)", "Motor DE Vertical RMS (mm/s)", "Motor DE Axial RMS (mm/s)"]].melt(
                                 id_vars="Date",
@@ -882,7 +882,7 @@ elif st.session_state.page == "monitoring":
 
                         # Motor NDE Vibration Trend
                         if "Motor NDE Horizontal RMS (mm/s)" in visualization_data.columns and "Motor NDE Vertical RMS (mm/s)" in visualization_data.columns and "Motor NDE Axial RMS (mm/s)" in visualization_data.columns:
-                            st.write("#### Vibration Trend for Equipment")
+                            st.write("#### Vibration Trend for Motor NDE")
                             vibration_chart_data = visualization_data[
                                 ["Date", "Motor NDE Horizontal RMS (mm/s)", "Motor NDE Vertical RMS (mm/s)", "Motor NDE Axial RMS (mm/s)"]].melt(
                                 id_vars="Date",
@@ -899,38 +899,6 @@ elif st.session_state.page == "monitoring":
                             st.plotly_chart(fig)
                         else:
                             st.warning("Motor NDE Vibration data is missing in the selected dataset.")
-
-                        # Oil Level Distribution for Equipment DE
-                        if "Oil Level" in visualization_data.columns:
-                            st.write("#### Oil Level Distribution for Equipment DE")
-                            oil_summary = visualization_data["DE Oil Level"].value_counts().reset_index()
-                            oil_summary.columns = ["DE Oil Level", "Count"]
-                            fig = px.bar(
-                                oil_summary,
-                                x="DE Oil Level",
-                                y="Count",
-                                title="Oil Level Distribution for Equipment DE",
-                                labels={"Count": "Number of Records"}
-                            )
-                            st.plotly_chart(fig)
-                        else:
-                            st.warning("DE Oil Level data is missing in the selected dataset.")
-
-                        # Oil Level Distribution for Equipment NDE
-                        if "Oil Level" in visualization_data.columns:
-                            st.write("#### Oil Level Distribution for Equipment NDE")
-                            oil_summary = visualization_data["NDE Oil Level"].value_counts().reset_index()
-                            oil_summary.columns = ["NDE Oil Level", "Count"]
-                            fig = px.bar(
-                                oil_summary,
-                                x="NDE Oil Level",
-                                y="Count",
-                                title="Oil Level Distribution for Equipment NDE",
-                                labels={"Count": "Number of Records"}
-                            )
-                            st.plotly_chart(fig)
-                        else:
-                            st.warning("NDE Oil Level data is missing in the selected dataset.")
 
 # Add Back Button
 if st.button("Back to Home"):
