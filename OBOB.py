@@ -200,16 +200,26 @@ def calculate_kpis():
             "compliance_rate": "No Data",
             "avg_temp": "No Data",
             "running_percentage": "No Data",
-            "data": pd.DataFrame()
+            "data": data
         }
 
-    # ✅ Convert "Is Running" column to numeric (1 for True, 0 for False)
-    data["Is Running"] = pd.to_numeric(data["Is Running"], errors="coerce")
-
-    compliance_rate = data["Is Running"].mean() * 100
-    avg_temp = data[["Driving End Temp", "Driven End Temp"]].mean().mean()
-    running_percentage = (data["Is Running"].sum() / len(data)) * 100
-
+    # ✅ Ensure "Is Running" column exists and convert properly
+    if "Is Running" not in data.columns:
+    raise KeyError("❌ 'Is Running' column is missing in the dataset!")
+    
+    data["Is Running"] = data["Is Running"].astype(str).str.lower().map({"true": 1, "false": 0, "1": 1, "0": 0}).fillna(0)
+    
+    # ✅ Ensure "Driving End Temp" and "Driven End Temp" exist & are numeric
+    for col in ["Driving End Temp", "Driven End Temp"]:
+        if col not in data.columns:
+            data[col] = 0  # Set default value
+        data[col] = pd.to_numeric(data[col], errors="coerce")
+    
+    # ✅ Compute KPIs safely
+    compliance_rate = data["Is Running"].mean() * 100 if not data["Is Running"].empty else 0
+    avg_temp = data[["Driving End Temp", "Driven End Temp"]].mean().mean() if not data[["Driving End Temp", "Driven End Temp"]].empty else 0
+    running_percentage = (data["Is Running"].sum() / len(data)) * 100 if len(data) > 0 else 0
+    
     return {
         "compliance_rate": f"{compliance_rate:.2f}%",
         "avg_temp": f"{avg_temp:.2f}°C",
