@@ -25,6 +25,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 # ✅ Set your passkey (Change this to your desired passkey)
 PASSKEY = "indorama2024"  # 🔥 Change this to your secret passkey
 
@@ -54,6 +55,11 @@ if not st.session_state.authenticated:
 
 # ✅ If authenticated, show the main app
 st.sidebar.success("🔓 Access Granted")
+
+if st.sidebar.button("🔒 Logout"):
+    st.session_state.authenticated = False  # Reset authentication state
+    st.session_state.page = "passkey"  # Redirect to Passkey page
+    st.rerun()  # Refresh app to apply changes
 
 # Define deviation thresholds for specific equipment
 equipment_thresholds = ({
