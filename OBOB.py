@@ -56,6 +56,9 @@ if not st.session_state.authenticated:
 # ✅ If authenticated, show the main app
 st.sidebar.success("🔓 Access Granted")
 
+if "page" not in st.session_state:
+    st.session_state.page = "main"
+
 # Define deviation thresholds for specific equipment
 equipment_thresholds = ({
     # 1670
@@ -604,6 +607,8 @@ if st.session_state.page == "main":
     # Next Button to Navigate
     if st.button("Next"):
         st.session_state.page = "monitoring"
+        st.experimental_rerun()  # 🔥 This forces an immediate re-run with the new state
+
 
 elif st.session_state.page == "monitoring":
             
