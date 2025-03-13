@@ -1,16 +1,4 @@
 import streamlit as st
-st.markdown(
-    """
-    <style>
-    /* Hide the Streamlit edit pencil */
-    .stDeployButton {display: none !important;}
-
-    /* Hide the GitHub logo */
-    .st-emotion-cache-18ni7ap {display: none !important;}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 import pandas as pd
 import os
 from datetime import datetime, timedelta
@@ -18,6 +6,25 @@ import plotly.express as px
 import base64
 import gspread
 from google.oauth2.service_account import Credentials
+
+st.markdown(
+    """
+    <style>
+    /* Hide the Streamlit edit pencil icon */
+    [data-testid="stDeployButton"] {display: none !important;}
+    
+    /* Hide the GitHub logo in the top right corner */
+    header {visibility: hidden;}
+    
+    /* Hide Streamlit's main menu */
+    #MainMenu {visibility: hidden;}
+    
+    /* Hide Streamlit footer (Powered by Streamlit) */
+    footer {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # ✅ Set your passkey (Change this to your desired passkey)
 PASSKEY = "indorama2024"  # 🔥 Change this to your secret passkey
