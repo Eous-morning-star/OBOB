@@ -7,6 +7,19 @@ import base64
 import gspread
 from google.oauth2.service_account import Credentials
 
+st.markdown(
+    """
+    <style>
+    /* Hide the Streamlit edit pencil */
+    .stDeployButton {display: none !important;}
+
+    /* Hide the GitHub logo */
+    .st-emotion-cache-18ni7ap {display: none !important;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ✅ Set your passkey (Change this to your desired passkey)
 PASSKEY = "indorama2024"  # 🔥 Change this to your secret passkey
 
