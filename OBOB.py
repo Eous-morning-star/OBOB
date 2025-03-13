@@ -26,7 +26,8 @@ if not st.session_state.authenticated:
         if passkey_input == PASSKEY:
             st.session_state.authenticated = True  # Set authentication to True
             st.success("✅ Access Granted! Welcome to the App.")
-            st.experimental_rerun()  # Refresh the app
+            st.rerun()  # ✅ Use st.rerun() instead
+
         else:
             st.error("❌ Incorrect Passkey. Please try again.")
 
