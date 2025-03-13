@@ -197,7 +197,6 @@ def calculate_kpis():
     data = load_data()
     if data.empty:
         return {
-            "compliance_rate": "No Data",
             "avg_temp": "No Data",
             "running_percentage": "No Data",
             "data": data
@@ -216,12 +215,10 @@ def calculate_kpis():
         data[col] = pd.to_numeric(data[col], errors="coerce")
     
     # ✅ Compute KPIs safely
-    compliance_rate = data["Is Running"].mean() * 100 if not data["Is Running"].empty else 0
     avg_temp = data[["Driving End Temp", "Driven End Temp"]].mean().mean() if not data[["Driving End Temp", "Driven End Temp"]].empty else 0
     running_percentage = (data["Is Running"].sum() / len(data)) * 100 if len(data) > 0 else 0
     
     return {
-        "compliance_rate": f"{compliance_rate:.2f}%",
         "avg_temp": f"{avg_temp:.2f}°C",
         "running_percentage": f"{running_percentage:.2f}%",
         "data": data
@@ -288,10 +285,9 @@ if st.session_state.page == "main":
     # Display KPIs
     st.subheader("Key Performance Indicators (KPIs)")
     kpis = calculate_kpis()
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Compliance Rate", kpis["compliance_rate"])
-    col2.metric("Average Temperature", kpis["avg_temp"])
-    col3.metric("Running Equipment", kpis["running_percentage"])
+    col1, col2 = st.columns(2)
+    col1.metric("Average Temperature", kpis["avg_temp"])
+    col2.metric("Running Equipment", kpis["running_percentage"])
 
     st.write("---")
 
