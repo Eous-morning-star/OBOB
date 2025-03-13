@@ -205,7 +205,7 @@ def calculate_kpis():
 
     # ✅ Ensure "Is Running" column exists and convert properly
     if "Is Running" not in data.columns:
-    raise KeyError("❌ 'Is Running' column is missing in the dataset!")
+        raise KeyError("❌ 'Is Running' column is missing in the dataset!")
     
     data["Is Running"] = data["Is Running"].astype(str).str.lower().map({"true": 1, "false": 0, "1": 1, "0": 0}).fillna(0)
     
