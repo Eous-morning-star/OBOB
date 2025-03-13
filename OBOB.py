@@ -1,12 +1,4 @@
 import streamlit as st
-import pandas as pd
-import os
-from datetime import datetime, timedelta
-import plotly.express as px
-import base64
-import gspread
-from google.oauth2.service_account import Credentials
-
 st.markdown(
     """
     <style>
@@ -19,6 +11,13 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+import pandas as pd
+import os
+from datetime import datetime, timedelta
+import plotly.express as px
+import base64
+import gspread
+from google.oauth2.service_account import Credentials
 
 # ✅ Set your passkey (Change this to your desired passkey)
 PASSKEY = "indorama2024"  # 🔥 Change this to your secret passkey
