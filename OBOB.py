@@ -44,8 +44,9 @@ if not st.session_state.authenticated:
     if st.button("Unlock"):
         if passkey_input == PASSKEY:
             st.session_state.authenticated = True  # Set authentication to True
+            st.session_state.page = "main"  # ✅ Reset to main page after login
             st.success("✅ Access Granted! Welcome to the App.")
-            st.rerun()  # ✅ Use st.rerun() instead
+            st.rerun()  # ✅ Refresh app
 
         else:
             st.error("❌ Incorrect Passkey. Please try again.")
